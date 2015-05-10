@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{04C3FE94-DAA4-4165-A400-DB399E643954}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TravelAgency</RootNamespace>
+    <AssemblyName>TravelAgency</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TravelAgency.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>appicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration.Designer.cs">
+      <DependentUpon>Administration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditClientGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEditClientGroup.Designer.cs">
+      <DependentUpon>AddEditClientGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BankAccount.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Branch.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cashier.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClientGroup.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerTransaction.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Expens.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FlightReservation.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralLedgerAccount.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelReservation.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerAccount.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerTransaction.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerTransactionDetail.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerTransactionType.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewCashier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCashier.Designer.cs">
+      <DependentUpon>NewCashier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageCashiers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageCashiers.Designer.cs">
+      <DependentUpon>ManageCashiers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewExpense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewExpense.Designer.cs">
+      <DependentUpon>NewExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageExpenses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageExpenses.Designer.cs">
+      <DependentUpon>ManageExpenses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewBankAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewBankAccount.Designer.cs">
+      <DependentUpon>NewBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageBankAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageBankAccounts.Designer.cs">
+      <DependentUpon>ManageBankAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Financial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Financial.Designer.cs">
+      <DependentUpon>Financial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageClientGroups.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageClientGroups.Designer.cs">
+      <DependentUpon>ManageClientGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditUser.Designer.cs">
+      <DependentUpon>EditUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewUser.Designer.cs">
+      <DependentUpon>NewUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditUserGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditUserGroup.Designer.cs">
+      <DependentUpon>EditUserGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewUserGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewUserGroup.Designer.cs">
+      <DependentUpon>NewUserGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Note.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentType.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportingForm.Designer.cs">
+      <DependentUpon>ReportingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservation.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReservationClient.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReservationStatus.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReservationType.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditVendor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditVendor.Designer.cs">
+      <DependentUpon>EditVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewVendor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewVendor.Designer.cs">
+      <DependentUpon>NewVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageVendors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageVendors.Designer.cs">
+      <DependentUpon>ManageVendors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ticket.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tickets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tickets.Designer.cs">
+      <DependentUpon>Tickets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservations.Designer.cs">
+      <DependentUpon>Reservations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewReservation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewReservation.Designer.cs">
+      <DependentUpon>NewReservation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFrom.Designer.cs">
+      <DependentUpon>MainFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditTicket.Designer.cs">
+      <DependentUpon>EditTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditClient.Designer.cs">
+      <DependentUpon>EditClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageClients.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageClients.Designer.cs">
+      <DependentUpon>ManageClients.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewClient.Designer.cs">
+      <DependentUpon>NewClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTicket.Designer.cs">
+      <DependentUpon>NewTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TravelAgenceMasterClass.cs" />
+    <Compile Include="TravelAgency.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TravelAgency.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TravelAgency.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TravelAgency.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TravelAgency.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroup.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisaReservation.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Administration.resx">
+      <DependentUpon>Administration.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddEditClientGroup.resx">
+      <DependentUpon>AddEditClientGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCashier.resx">
+      <DependentUpon>NewCashier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageCashiers.resx">
+      <DependentUpon>ManageCashiers.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewExpense.resx">
+      <DependentUpon>NewExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageExpenses.resx">
+      <DependentUpon>ManageExpenses.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBankAccount.resx">
+      <DependentUpon>NewBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageBankAccounts.resx">
+      <DependentUpon>ManageBankAccounts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Financial.resx">
+      <DependentUpon>Financial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageClientGroups.resx">
+      <DependentUpon>ManageClientGroups.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditUser.resx">
+      <DependentUpon>EditUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewUser.resx">
+      <DependentUpon>NewUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditUserGroup.resx">
+      <DependentUpon>EditUserGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewUserGroup.resx">
+      <DependentUpon>NewUserGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportingForm.resx">
+      <DependentUpon>ReportingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditVendor.resx">
+      <DependentUpon>EditVendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewVendor.resx">
+      <DependentUpon>NewVendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageVendors.resx">
+      <DependentUpon>ManageVendors.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tickets.resx">
+      <DependentUpon>Tickets.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservations.resx">
+      <DependentUpon>Reservations.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewReservation.resx">
+      <DependentUpon>NewReservation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFrom.resx">
+      <DependentUpon>MainFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditTicket.resx">
+      <DependentUpon>EditTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditClient.resx">
+      <DependentUpon>EditClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageClients.resx">
+      <DependentUpon>ManageClients.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewClient.resx">
+      <DependentUpon>NewClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewTicket.resx">
+      <DependentUpon>NewTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EntityDeploy Include="TravelAgency.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TravelAgency.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TravelAgency.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TravelAgency.edmx</DependentUpon>
+      <LastGenOutput>TravelAgency.Context.cs</LastGenOutput>
+    </None>
+    <None Include="TravelAgency.edmx.diagram">
+      <DependentUpon>TravelAgency.edmx</DependentUpon>
+    </None>
+    <None Include="TravelAgency.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TravelAgency.edmx</DependentUpon>
+      <LastGenOutput>TravelAgency.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IMAGE.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tickets.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customers.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394257180_Administrative_Tools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394257875_custom-reports.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_service_charges.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394294545_Money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394294492_wallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394294625_Customer_Male_Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1394294625_Customer_Male_Light1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1393108387_ticket.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel_Login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appicon.ico" />
+    <None Include="Resources\1418405687_bank_cards.png" />
+    <None Include="Resources\1418405777_expense-128.png" />
+    <None Include="Resources\1418405900_electronic_billing_machine.png" />
+    <Content Include="Resources\remove32.png" />
+    <None Include="Resources\cam32.png" />
+    <None Include="Resources\ok321.png" />
+    <None Include="Resources\ok32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

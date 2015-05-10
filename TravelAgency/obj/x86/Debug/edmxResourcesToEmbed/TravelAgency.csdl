@@ -1,0 +1,779 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TravelAgencyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="TravelAgencyEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="os_CreateIndexIfMissingOrDifferent">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="CommaSeparatedColumns" Mode="In" Type="String" />
+      <Parameter Name="CommaSeparatedIncludes" Mode="In" Type="String" />
+      <Parameter Name="OptionalIndexName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="os_DropIndexesAndConstraintsDependingOnAcolumn">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="ColumnName" Mode="In" Type="String" />
+      <Parameter Name="DropIndexes" Mode="In" Type="Boolean" />
+      <Parameter Name="DropConstraints" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="BankAccounts" EntityType="TravelAgencyModel.BankAccount" />
+    <EntitySet Name="Branches" EntityType="TravelAgencyModel.Branch" />
+    <EntitySet Name="Cashiers" EntityType="TravelAgencyModel.Cashier" />
+    <EntitySet Name="ClientGroups" EntityType="TravelAgencyModel.ClientGroup" />
+    <EntitySet Name="Clients" EntityType="TravelAgencyModel.Client" />
+    <EntitySet Name="CustomerTransactions" EntityType="TravelAgencyModel.CustomerTransaction" />
+    <EntitySet Name="Expenses" EntityType="TravelAgencyModel.Expens" />
+    <EntitySet Name="FlightReservations" EntityType="TravelAgencyModel.FlightReservation" />
+    <EntitySet Name="GeneralLedgerAccounts" EntityType="TravelAgencyModel.GeneralLedgerAccount" />
+    <EntitySet Name="HotelReservations" EntityType="TravelAgencyModel.HotelReservation" />
+    <EntitySet Name="LedgerAccounts" EntityType="TravelAgencyModel.LedgerAccount" />
+    <EntitySet Name="LedgerTransactions" EntityType="TravelAgencyModel.LedgerTransaction" />
+    <EntitySet Name="LedgerTransactionTypes" EntityType="TravelAgencyModel.LedgerTransactionType" />
+    <EntitySet Name="Notes" EntityType="TravelAgencyModel.Note" />
+    <EntitySet Name="PaymentTypes" EntityType="TravelAgencyModel.PaymentType" />
+    <EntitySet Name="ReservationClients" EntityType="TravelAgencyModel.ReservationClient" />
+    <EntitySet Name="Reservations" EntityType="TravelAgencyModel.Reservation" />
+    <EntitySet Name="ReservationStatuses" EntityType="TravelAgencyModel.ReservationStatus" />
+    <EntitySet Name="ReservationTypes" EntityType="TravelAgencyModel.ReservationType" />
+    <EntitySet Name="Tickets" EntityType="TravelAgencyModel.Ticket" />
+    <EntitySet Name="UserGroups" EntityType="TravelAgencyModel.UserGroup" />
+    <EntitySet Name="Users" EntityType="TravelAgencyModel.User" />
+    <EntitySet Name="Vendors" EntityType="TravelAgencyModel.Vendor" />
+    <EntitySet Name="VisaReservations" EntityType="TravelAgencyModel.VisaReservation" />
+    <EntitySet Name="LedgerTransactionDetails" EntityType="TravelAgencyModel.LedgerTransactionDetail" />
+    <AssociationSet Name="FK_LedgerAccounts_BankAccounts" Association="TravelAgencyModel.FK_LedgerAccounts_BankAccounts">
+      <End Role="BankAccount" EntitySet="BankAccounts" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clients_Branches" Association="TravelAgencyModel.FK_Clients_Branches">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerAccounts_Cashiers" Association="TravelAgencyModel.FK_LedgerAccounts_Cashiers">
+      <End Role="Cashier" EntitySet="Cashiers" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clients_Users" Association="TravelAgencyModel.FK_Clients_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerAccounts_Clients" Association="TravelAgencyModel.FK_LedgerAccounts_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Clients" Association="TravelAgencyModel.FK_Reservations_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Clients" Association="TravelAgencyModel.FK_Tickets_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerAccounts_Expenses" Association="TravelAgencyModel.FK_LedgerAccounts_Expenses">
+      <End Role="Expens" EntitySet="Expenses" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FlightReservation_Reservations" Association="TravelAgencyModel.FK_FlightReservation_Reservations">
+      <End Role="Reservation" EntitySet="Reservations" />
+      <End Role="FlightReservation" EntitySet="FlightReservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerAccounts_GeneralLedgerAccounts" Association="TravelAgencyModel.FK_LedgerAccounts_GeneralLedgerAccounts">
+      <End Role="GeneralLedgerAccount" EntitySet="GeneralLedgerAccounts" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HotelReservation_Reservations" Association="TravelAgencyModel.FK_HotelReservation_Reservations">
+      <End Role="Reservation" EntitySet="Reservations" />
+      <End Role="HotelReservation" EntitySet="HotelReservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerAccounts_Vendors" Association="TravelAgencyModel.FK_LedgerAccounts_Vendors">
+      <End Role="Vendor" EntitySet="Vendors" />
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerTransactionDetails_LedgerAccounts" Association="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts">
+      <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+      <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerTransactionDetails_LedgerTrqnsactions" Association="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions">
+      <End Role="LedgerTransaction" EntitySet="LedgerTransactions" />
+      <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LedgerTransactions_LedgerTransactionTypes" Association="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes">
+      <End Role="LedgerTransactionType" EntitySet="LedgerTransactionTypes" />
+      <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notes_Users" Association="TravelAgencyModel.FK_Notes_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Note" EntitySet="Notes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReservationClients_Reservations" Association="TravelAgencyModel.FK_ReservationClients_Reservations">
+      <End Role="Reservation" EntitySet="Reservations" />
+      <End Role="ReservationClient" EntitySet="ReservationClients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_ReservationStatuses" Association="TravelAgencyModel.FK_Reservations_ReservationStatuses">
+      <End Role="ReservationStatus" EntitySet="ReservationStatuses" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_ReservationTypes" Association="TravelAgencyModel.FK_Reservations_ReservationTypes">
+      <End Role="ReservationType" EntitySet="ReservationTypes" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Users" Association="TravelAgencyModel.FK_Reservations_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Vendors" Association="TravelAgencyModel.FK_Reservations_Vendors">
+      <End Role="Vendor" EntitySet="Vendors" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisaReservation_Reservations" Association="TravelAgencyModel.FK_VisaReservation_Reservations">
+      <End Role="Reservation" EntitySet="Reservations" />
+      <End Role="VisaReservation" EntitySet="VisaReservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_UserGroups" Association="TravelAgencyModel.FK_Users_UserGroups">
+      <End Role="UserGroup" EntitySet="UserGroups" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vendors_Users" Association="TravelAgencyModel.FK_Vendors_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Vendor" EntitySet="Vendors" />
+    </AssociationSet>
+    <AssociationSet Name="ClientGroupClients" Association="TravelAgencyModel.ClientGroupClients">
+      <End Role="ClientGroup" EntitySet="ClientGroups" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BankAccount">
+    <Key>
+      <PropertyRef Name="BankAccountID" />
+    </Key>
+    <Property Name="BankAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BankName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_BankAccounts" FromRole="BankAccount" ToRole="LedgerAccount" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FilesPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Clients" Relationship="TravelAgencyModel.FK_Clients_Branches" FromRole="Branch" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Cashier">
+    <Key>
+      <PropertyRef Name="CashierID" />
+    </Key>
+    <Property Name="CashierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_Cashiers" FromRole="Cashier" ToRole="LedgerAccount" />
+  </EntityType>
+  <EntityType Name="ClientGroup">
+    <Key>
+      <PropertyRef Name="ClientGroupID" />
+    </Key>
+    <Property Name="ClientGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Clients" Relationship="TravelAgencyModel.ClientGroupClients" FromRole="ClientGroup" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CellPhone1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CellPhone2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="HomePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="OfficePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="0" />
+    <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <Property Name="ProfilePictureName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="FullName" Type="String" MaxLength="152" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Branch" Relationship="TravelAgencyModel.FK_Clients_Branches" FromRole="Client" ToRole="Branch" />
+    <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_Clients_Users" FromRole="Client" ToRole="User" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_Clients" FromRole="Client" ToRole="LedgerAccount" />
+    <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_Clients" FromRole="Client" ToRole="Reservation" />
+    <NavigationProperty Name="Tickets" Relationship="TravelAgencyModel.FK_Tickets_Clients" FromRole="Client" ToRole="Ticket" />
+    <NavigationProperty Name="ClientGroups" Relationship="TravelAgencyModel.ClientGroupClients" FromRole="Client" ToRole="ClientGroup" />
+  </EntityType>
+  <EntityType Name="CustomerTransaction">
+    <Key>
+      <PropertyRef Name="CustomerTransactionID" />
+    </Key>
+    <Property Name="CustomerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTypeID" Type="Int32" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Expens">
+    <Key>
+      <PropertyRef Name="ExpenseID" />
+    </Key>
+    <Property Name="ExpenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpenseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_Expenses" FromRole="Expens" ToRole="LedgerAccount" />
+  </EntityType>
+  <EntityType Name="FlightReservation">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="Int32" Nullable="false" />
+    <Property Name="TicketNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RefSystem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RefAirLine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FromLocation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ToLocation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AirLine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_FlightReservation_Reservations" FromRole="FlightReservation" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="GeneralLedgerAccount">
+    <Key>
+      <PropertyRef Name="GeneralLedgerAccountID" />
+    </Key>
+    <Property Name="GeneralLedgerAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LedgerAccountTypeID" Type="Int32" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_GeneralLedgerAccounts" FromRole="GeneralLedgerAccount" ToRole="LedgerAccount" />
+  </EntityType>
+  <EntityType Name="HotelReservation">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="Int32" Nullable="false" />
+    <Property Name="HotelName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SingleRooms" Type="Int32" Nullable="false" />
+    <Property Name="DoubleRooms" Type="Int32" Nullable="false" />
+    <Property Name="TripleRooms" Type="Int32" Nullable="false" />
+    <Property Name="QuadRooms" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_HotelReservation_Reservations" FromRole="HotelReservation" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="LedgerAccount">
+    <Key>
+      <PropertyRef Name="LedgerAccountID" />
+    </Key>
+    <Property Name="LedgerAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GeneralLedgerAccountID" Type="Int32" Nullable="false" />
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="VendorID" Type="Int32" />
+    <Property Name="CashierID" Type="Int32" />
+    <Property Name="BankAccountID" Type="Int32" />
+    <Property Name="ExpenseID" Type="Int32" />
+    <NavigationProperty Name="BankAccount" Relationship="TravelAgencyModel.FK_LedgerAccounts_BankAccounts" FromRole="LedgerAccount" ToRole="BankAccount" />
+    <NavigationProperty Name="Cashier" Relationship="TravelAgencyModel.FK_LedgerAccounts_Cashiers" FromRole="LedgerAccount" ToRole="Cashier" />
+    <NavigationProperty Name="Client" Relationship="TravelAgencyModel.FK_LedgerAccounts_Clients" FromRole="LedgerAccount" ToRole="Client" />
+    <NavigationProperty Name="Expens" Relationship="TravelAgencyModel.FK_LedgerAccounts_Expenses" FromRole="LedgerAccount" ToRole="Expens" />
+    <NavigationProperty Name="GeneralLedgerAccount" Relationship="TravelAgencyModel.FK_LedgerAccounts_GeneralLedgerAccounts" FromRole="LedgerAccount" ToRole="GeneralLedgerAccount" />
+    <NavigationProperty Name="Vendor" Relationship="TravelAgencyModel.FK_LedgerAccounts_Vendors" FromRole="LedgerAccount" ToRole="Vendor" />
+    <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerAccount" ToRole="LedgerTransactionDetail" />
+  </EntityType>
+  <EntityType Name="LedgerTransaction">
+    <Key>
+      <PropertyRef Name="LedgerTransactionID" />
+    </Key>
+    <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransaction" ToRole="LedgerTransactionDetail" />
+  </EntityType>
+  <EntityType Name="LedgerTransactionType">
+    <Key>
+      <PropertyRef Name="LedgerTransactionTypeID" />
+    </Key>
+    <Property Name="LedgerTransactionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" FromRole="LedgerTransactionType" ToRole="LedgerTransactionDetail" />
+  </EntityType>
+  <EntityType Name="Note">
+    <Key>
+      <PropertyRef Name="NoteID" />
+    </Key>
+    <Property Name="NoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NoteBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TicketID" Type="Int32" Nullable="false" />
+    <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_Notes_Users" FromRole="Note" ToRole="User" />
+  </EntityType>
+  <EntityType Name="PaymentType">
+    <Key>
+      <PropertyRef Name="PaymentTypeID" />
+    </Key>
+    <Property Name="PaymentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ReservationClient">
+    <Key>
+      <PropertyRef Name="ReservationClientID" />
+    </Key>
+    <Property Name="ReservationClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReservationID" Type="Int32" Nullable="false" />
+    <Property Name="ClientName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_ReservationClients_Reservations" FromRole="ReservationClient" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <Property Name="VendorID" Type="Int32" Nullable="false" />
+    <Property Name="BasicPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Taxes" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CommitionRatio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="NetPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Commission" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaidAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="BalanceDue" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Client" Relationship="TravelAgencyModel.FK_Reservations_Clients" FromRole="Reservation" ToRole="Client" />
+    <NavigationProperty Name="FlightReservation" Relationship="TravelAgencyModel.FK_FlightReservation_Reservations" FromRole="Reservation" ToRole="FlightReservation" />
+    <NavigationProperty Name="HotelReservation" Relationship="TravelAgencyModel.FK_HotelReservation_Reservations" FromRole="Reservation" ToRole="HotelReservation" />
+    <NavigationProperty Name="ReservationClients" Relationship="TravelAgencyModel.FK_ReservationClients_Reservations" FromRole="Reservation" ToRole="ReservationClient" />
+    <NavigationProperty Name="ReservationStatus" Relationship="TravelAgencyModel.FK_Reservations_ReservationStatuses" FromRole="Reservation" ToRole="ReservationStatus" />
+    <NavigationProperty Name="ReservationType" Relationship="TravelAgencyModel.FK_Reservations_ReservationTypes" FromRole="Reservation" ToRole="ReservationType" />
+    <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_Reservations_Users" FromRole="Reservation" ToRole="User" />
+    <NavigationProperty Name="Vendor" Relationship="TravelAgencyModel.FK_Reservations_Vendors" FromRole="Reservation" ToRole="Vendor" />
+    <NavigationProperty Name="VisaReservation" Relationship="TravelAgencyModel.FK_VisaReservation_Reservations" FromRole="Reservation" ToRole="VisaReservation" />
+  </EntityType>
+  <EntityType Name="ReservationStatus">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_ReservationStatuses" FromRole="ReservationStatus" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="ReservationType">
+    <Key>
+      <PropertyRef Name="TypeId" />
+    </Key>
+    <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_ReservationTypes" FromRole="ReservationType" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketID" />
+    </Key>
+    <Property Name="TicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+    <Property Name="AssigneeUserID" Type="Int32" Nullable="false" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsClosed" Type="Boolean" Nullable="false" />
+    <Property Name="IsRead" Type="Boolean" Nullable="false" />
+    <Property Name="IsNotified" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Client" Relationship="TravelAgencyModel.FK_Tickets_Clients" FromRole="Ticket" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="UserGroup">
+    <Key>
+      <PropertyRef Name="UserGroupID" />
+    </Key>
+    <Property Name="UserGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="TravelAgencyModel.FK_Users_UserGroups" FromRole="UserGroup" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Clients" Relationship="TravelAgencyModel.FK_Clients_Users" FromRole="User" ToRole="Client" />
+    <NavigationProperty Name="Notes" Relationship="TravelAgencyModel.FK_Notes_Users" FromRole="User" ToRole="Note" />
+    <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_Users" FromRole="User" ToRole="Reservation" />
+    <NavigationProperty Name="UserGroup" Relationship="TravelAgencyModel.FK_Users_UserGroups" FromRole="User" ToRole="UserGroup" />
+    <NavigationProperty Name="Vendors" Relationship="TravelAgencyModel.FK_Vendors_Users" FromRole="User" ToRole="Vendor" />
+  </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="VendorID" />
+    </Key>
+    <Property Name="VendorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_Vendors" FromRole="Vendor" ToRole="LedgerAccount" />
+    <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_Vendors" FromRole="Vendor" ToRole="Reservation" />
+    <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_Vendors_Users" FromRole="Vendor" ToRole="User" />
+  </EntityType>
+  <EntityType Name="VisaReservation">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="Int32" Nullable="false" />
+    <Property Name="Country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VisaType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_VisaReservation_Reservations" FromRole="VisaReservation" ToRole="Reservation" />
+  </EntityType>
+  <EntityType Name="LedgerTransactionDetail">
+    <Key>
+      <PropertyRef Name="LedgerTransactionID" />
+      <PropertyRef Name="Currency" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="ExchangeRate" />
+      <PropertyRef Name="LedgerTransactionTypeID" />
+      <PropertyRef Name="LedgerAccountID" />
+    </Key>
+    <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="ExchangeRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="LedgerTransactionTypeID" Type="Int32" Nullable="false" />
+    <Property Name="LedgerAccountID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerTransactionDetail" ToRole="LedgerAccount" />
+    <NavigationProperty Name="LedgerTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransactionDetail" ToRole="LedgerTransaction" />
+    <NavigationProperty Name="LedgerTransactionType" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" FromRole="LedgerTransactionDetail" ToRole="LedgerTransactionType" />
+  </EntityType>
+  <Association Name="FK_LedgerAccounts_BankAccounts">
+    <End Type="TravelAgencyModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BankAccount">
+        <PropertyRef Name="BankAccountID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="BankAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clients_Branches">
+    <End Type="TravelAgencyModel.Branch" Role="Branch" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerAccounts_Cashiers">
+    <End Type="TravelAgencyModel.Cashier" Role="Cashier" Multiplicity="0..1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cashier">
+        <PropertyRef Name="CashierID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="CashierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clients_Users">
+    <End Type="TravelAgencyModel.User" Role="User" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="CreationUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerAccounts_Clients">
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="0..1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Clients">
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Clients">
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Ticket" Role="Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerAccounts_Expenses">
+    <End Type="TravelAgencyModel.Expens" Role="Expens" Multiplicity="0..1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Expens">
+        <PropertyRef Name="ExpenseID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="ExpenseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FlightReservation_Reservations">
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="1" />
+    <End Type="TravelAgencyModel.FlightReservation" Role="FlightReservation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Reservation">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="FlightReservation">
+        <PropertyRef Name="ReservationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerAccounts_GeneralLedgerAccounts">
+    <End Type="TravelAgencyModel.GeneralLedgerAccount" Role="GeneralLedgerAccount" Multiplicity="1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GeneralLedgerAccount">
+        <PropertyRef Name="GeneralLedgerAccountID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="GeneralLedgerAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HotelReservation_Reservations">
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="1" />
+    <End Type="TravelAgencyModel.HotelReservation" Role="HotelReservation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Reservation">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="HotelReservation">
+        <PropertyRef Name="ReservationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerAccounts_Vendors">
+    <End Type="TravelAgencyModel.Vendor" Role="Vendor" Multiplicity="0..1" />
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="LedgerAccount">
+        <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerTransactionDetails_LedgerAccounts">
+    <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="1" />
+    <End Type="TravelAgencyModel.LedgerTransactionDetail" Role="LedgerTransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LedgerAccount">
+        <PropertyRef Name="LedgerAccountID" />
+      </Principal>
+      <Dependent Role="LedgerTransactionDetail">
+        <PropertyRef Name="LedgerAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerTransactionDetails_LedgerTrqnsactions">
+    <End Type="TravelAgencyModel.LedgerTransaction" Role="LedgerTransaction" Multiplicity="1" />
+    <End Type="TravelAgencyModel.LedgerTransactionDetail" Role="LedgerTransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LedgerTransaction">
+        <PropertyRef Name="LedgerTransactionID" />
+      </Principal>
+      <Dependent Role="LedgerTransactionDetail">
+        <PropertyRef Name="LedgerTransactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LedgerTransactions_LedgerTransactionTypes">
+    <End Type="TravelAgencyModel.LedgerTransactionType" Role="LedgerTransactionType" Multiplicity="1" />
+    <End Type="TravelAgencyModel.LedgerTransactionDetail" Role="LedgerTransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LedgerTransactionType">
+        <PropertyRef Name="LedgerTransactionTypeID" />
+      </Principal>
+      <Dependent Role="LedgerTransactionDetail">
+        <PropertyRef Name="LedgerTransactionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notes_Users">
+    <End Type="TravelAgencyModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TravelAgencyModel.Note" Role="Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="CreationUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReservationClients_Reservations">
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TravelAgencyModel.ReservationClient" Role="ReservationClient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reservation">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="ReservationClient">
+        <PropertyRef Name="ReservationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_ReservationStatuses">
+    <End Type="TravelAgencyModel.ReservationStatus" Role="ReservationStatus" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReservationStatus">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_ReservationTypes">
+    <End Type="TravelAgencyModel.ReservationType" Role="ReservationType" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReservationType">
+        <PropertyRef Name="TypeId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Users">
+    <End Type="TravelAgencyModel.User" Role="User" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="CreationUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Vendors">
+    <End Type="TravelAgencyModel.Vendor" Role="Vendor" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisaReservation_Reservations">
+    <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="1" />
+    <End Type="TravelAgencyModel.VisaReservation" Role="VisaReservation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Reservation">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="VisaReservation">
+        <PropertyRef Name="ReservationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_UserGroups">
+    <End Type="TravelAgencyModel.UserGroup" Role="UserGroup" Multiplicity="1" />
+    <End Type="TravelAgencyModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserGroup">
+        <PropertyRef Name="UserGroupID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vendors_Users">
+    <End Type="TravelAgencyModel.User" Role="User" Multiplicity="1" />
+    <End Type="TravelAgencyModel.Vendor" Role="Vendor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Vendor">
+        <PropertyRef Name="CreationUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClientGroupClients">
+    <End Type="TravelAgencyModel.ClientGroup" Role="ClientGroup" Multiplicity="*" />
+    <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
+  </Association>
+</Schema>

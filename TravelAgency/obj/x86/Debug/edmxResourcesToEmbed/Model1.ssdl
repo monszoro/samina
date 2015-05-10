@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TravelAgencyModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="TravelAgencyModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="TravelAgencyModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notes" EntityType="TravelAgencyModel.Store.Notes" store:Type="Tables" store:Schema="dbo" store:Name="Notes">
+      <DefiningQuery>SELECT 
+      [Notes].[NoteID] AS [NoteID], 
+      [Notes].[NoteBody] AS [NoteBody], 
+      [Notes].[DateCreated] AS [DateCreated], 
+      [Notes].[TicketID] AS [TicketID]
+      FROM [dbo].[Notes] AS [Notes]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Tickets" EntityType="TravelAgencyModel.Store.Tickets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserGroups" EntityType="TravelAgencyModel.Store.UserGroups" store:Type="Tables" store:Schema="dbo" store:Name="UserGroups">
+      <DefiningQuery>SELECT 
+      [UserGroups].[UserGroupID] AS [UserGroupID], 
+      [UserGroups].[GroupName] AS [GroupName]
+      FROM [dbo].[UserGroups] AS [UserGroups]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Users" EntityType="TravelAgencyModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Clients_Users" Association="TravelAgencyModel.Store.FK_Clients_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Clients" EntitySet="Clients" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
+    <Property Name="CellPhone1" Type="varchar" MaxLength="15" />
+    <Property Name="CellPhone2" Type="varchar" MaxLength="15" />
+    <Property Name="HomePhone" Type="varchar" MaxLength="15" />
+    <Property Name="OfficePhone" Type="varchar" MaxLength="15" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="DateCreatd" Type="date" />
+    <Property Name="CreationUserId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'TravelAgency.dbo.Notes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="Notes">
+    <Key>
+      <PropertyRef Name="NoteID" />
+      <PropertyRef Name="NoteBody" />
+      <PropertyRef Name="DateCreated" />
+      <PropertyRef Name="TicketID" />
+    </Key>
+    <Property Name="NoteID" Type="int" Nullable="false" />
+    <Property Name="NoteBody" Type="text" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="TicketID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="TicketID" />
+    </Key>
+    <Property Name="TicketID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DateCreated" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreationUserID" Type="int" Nullable="false" />
+    <Property Name="AssigneeUserID" Type="int" Nullable="false" />
+    <Property Name="ClientID" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="Notes" Type="text" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'TravelAgency.dbo.UserGroups' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="UserGroups">
+    <Key>
+      <PropertyRef Name="UserGroupID" />
+      <PropertyRef Name="GroupName" />
+    </Key>
+    <Property Name="UserGroupID" Type="int" Nullable="false" />
+    <Property Name="GroupName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Login" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Clients_Users">
+    <End Role="Users" Type="TravelAgencyModel.Store.Users" Multiplicity="1" />
+    <End Role="Clients" Type="TravelAgencyModel.Store.Clients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Clients">
+        <PropertyRef Name="CreationUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SearchUSers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Login" Type="varchar" Mode="In" />
+    <Parameter Name="PassWord" Type="varchar" Mode="In" />
+  </Function>
+</Schema>
