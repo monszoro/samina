@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="BankAccounts">
           <Key>
             <PropertyRef Name="BankAccountID" />
@@ -65,6 +65,14 @@
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="ProfilePictureName" Type="varchar" MaxLength="300" />
           <Property Name="FullName" Type="varchar" MaxLength="152" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Sign" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerTransactions">
           <Key>
@@ -134,17 +142,17 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
         <EntityType Name="LedgerTransactionDetails">
           <Key>
             <PropertyRef Name="LedgerTransactionID" />
-            <PropertyRef Name="Currency" />
+            <PropertyRef Name="CurrencyID" />
             <PropertyRef Name="Amount" />
             <PropertyRef Name="ExchangeRate" />
             <PropertyRef Name="LedgerTransactionTypeID" />
             <PropertyRef Name="LedgerAccountID" />
           </Key>
           <Property Name="LedgerTransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Currency" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Amount" Type="money" Nullable="false" />
-          <Property Name="ExchangeRate" Type="money" Nullable="false" />
-          <Property Name="TotalAmount" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="CurrencyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="24" Scale="12" Nullable="false" />
+          <Property Name="ExchangeRate" Type="decimal" Precision="24" Scale="12" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="38" Scale="13" StoreGeneratedPattern="Computed" />
           <Property Name="LedgerTransactionTypeID" Type="int" Nullable="false" />
           <Property Name="LedgerAccountID" Type="int" Nullable="false" />
         </EntityType>
@@ -420,6 +428,18 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LedgerTransactionDetails_Currency">
+          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+          <End Role="LedgerTransactionDetails" Type="Self.LedgerTransactionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="LedgerTransactionDetails">
+              <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LedgerTransactionDetails_LedgerAccounts">
           <End Role="LedgerAccounts" Type="Self.LedgerAccounts" Multiplicity="1" />
           <End Role="LedgerTransactionDetails" Type="Self.LedgerTransactionDetails" Multiplicity="*" />
@@ -648,6 +668,7 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
           <EntitySet Name="ClientGroupClients" EntityType="Self.ClientGroupClients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClientGroups" EntityType="Self.ClientGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerTransactions" EntityType="Self.CustomerTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightReservations" EntityType="Self.FlightReservations" Schema="dbo" store:Type="Tables" />
@@ -670,7 +691,7 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
           <EntitySet Name="LedgerTransactionDetails" EntityType="Self.LedgerTransactionDetails" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [LedgerTransactionDetails].[LedgerTransactionID] AS [LedgerTransactionID], 
-[LedgerTransactionDetails].[Currency] AS [Currency], 
+[LedgerTransactionDetails].[CurrencyID] AS [CurrencyID], 
 [LedgerTransactionDetails].[Amount] AS [Amount], 
 [LedgerTransactionDetails].[ExchangeRate] AS [ExchangeRate], 
 [LedgerTransactionDetails].[TotalAmount] AS [TotalAmount], 
@@ -725,6 +746,10 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <AssociationSet Name="FK_LedgerAccounts_Vendors" Association="Self.FK_LedgerAccounts_Vendors">
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactionDetails_Currency" Association="Self.FK_LedgerTransactionDetails_Currency">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="LedgerTransactionDetails" EntitySet="LedgerTransactionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_LedgerTransactionDetails_LedgerAccounts" Association="Self.FK_LedgerTransactionDetails_LedgerAccounts">
             <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
@@ -835,6 +860,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <EntitySet Name="Cashiers" EntityType="TravelAgencyModel.Cashier" />
           <EntitySet Name="ClientGroups" EntityType="TravelAgencyModel.ClientGroup" />
           <EntitySet Name="Clients" EntityType="TravelAgencyModel.Client" />
+          <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
           <EntitySet Name="CustomerTransactions" EntityType="TravelAgencyModel.CustomerTransaction" />
           <EntitySet Name="Expenses" EntityType="TravelAgencyModel.Expens" />
           <EntitySet Name="FlightReservations" EntityType="TravelAgencyModel.FlightReservation" />
@@ -882,6 +908,10 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <AssociationSet Name="FK_Tickets_Clients" Association="TravelAgencyModel.FK_Tickets_Clients">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactionDetails_Currency" Association="TravelAgencyModel.FK_LedgerTransactionDetails_Currency">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_LedgerAccounts_Expenses" Association="TravelAgencyModel.FK_LedgerAccounts_Expenses">
             <End Role="Expens" EntitySet="Expenses" />
@@ -955,7 +985,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             <End Role="ClientGroup" EntitySet="ClientGroups" />
             <End Role="Client" EntitySet="Clients" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="BankAccount">
           <Key>
             <PropertyRef Name="BankAccountID" />
@@ -1018,6 +1048,15 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_Clients" FromRole="Client" ToRole="Reservation" />
           <NavigationProperty Name="Tickets" Relationship="TravelAgencyModel.FK_Tickets_Clients" FromRole="Client" ToRole="Ticket" />
           <NavigationProperty Name="ClientGroups" Relationship="TravelAgencyModel.ClientGroupClients" FromRole="Client" ToRole="ClientGroup" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Sign" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_Currency" FromRole="Currency" ToRole="LedgerTransactionDetail" />
         </EntityType>
         <EntityType Name="CustomerTransaction">
           <Key>
@@ -1250,19 +1289,20 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
         <EntityType Name="LedgerTransactionDetail">
           <Key>
             <PropertyRef Name="LedgerTransactionID" />
-            <PropertyRef Name="Currency" />
+            <PropertyRef Name="CurrencyID" />
             <PropertyRef Name="Amount" />
             <PropertyRef Name="ExchangeRate" />
             <PropertyRef Name="LedgerTransactionTypeID" />
             <PropertyRef Name="LedgerAccountID" />
           </Key>
           <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ExchangeRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
+          <Property Name="ExchangeRate" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="38" Scale="13" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="LedgerTransactionTypeID" Type="Int32" Nullable="false" />
           <Property Name="LedgerAccountID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_Currency" FromRole="LedgerTransactionDetail" ToRole="Currency" />
           <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerTransactionDetail" ToRole="LedgerAccount" />
           <NavigationProperty Name="LedgerTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransactionDetail" ToRole="LedgerTransaction" />
           <NavigationProperty Name="LedgerTransactionType" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" FromRole="LedgerTransactionDetail" ToRole="LedgerTransactionType" />
@@ -1348,6 +1388,18 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             </Principal>
             <Dependent Role="Ticket">
               <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerTransactionDetails_Currency">
+          <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="TravelAgencyModel.LedgerTransactionDetail" Role="LedgerTransactionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="LedgerTransactionDetail">
+              <PropertyRef Name="CurrencyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1636,6 +1688,15 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="TravelAgencyModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CustomerTransactions">
             <EntityTypeMapping TypeName="TravelAgencyModel.CustomerTransaction">
               <MappingFragment StoreEntitySet="CustomerTransactions">
@@ -1854,7 +1915,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
                 <ScalarProperty Name="LedgerTransactionID" ColumnName="LedgerTransactionID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1867,7 +1928,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
               <ScalarProperty Name="ClientGroupID" ColumnName="ClientGroupID" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

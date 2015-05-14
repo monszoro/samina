@@ -49,6 +49,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -88,6 +89,9 @@
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="ClientGroup.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomerTransaction.cs">
@@ -205,12 +209,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ReportingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReportingForm.Designer.cs">
-      <DependentUpon>ReportingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Reservation.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
@@ -330,6 +328,7 @@
     <Compile Include="UserGroup.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
+    <Compile Include="Util\Payment.cs" />
     <Compile Include="Vendor.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
@@ -385,9 +384,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportingForm.resx">
-      <DependentUpon>ReportingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>

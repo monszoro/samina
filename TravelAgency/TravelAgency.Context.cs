@@ -33,6 +33,7 @@ namespace TravelAgency
         public DbSet<Cashier> Cashiers { get; set; }
         public DbSet<ClientGroup> ClientGroups { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
         public DbSet<CustomerTransaction> CustomerTransactions { get; set; }
         public DbSet<Expens> Expenses { get; set; }
         public DbSet<FlightReservation> FlightReservations { get; set; }

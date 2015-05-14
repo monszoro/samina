@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using TravelAgency.Util;
+using System.Data.Linq;
 namespace TravelAgency
 {
     public partial class NewReservation : Form
@@ -722,6 +724,21 @@ private void  saveNewReservation(Vendor vendor) {
             cmdReFund.Visible = false;
             CmdChange.Visible = false;
             LoadReservationInfo();
+        }
+
+        private void cmdConfirm_Click_1(object sender, EventArgs e)
+        {
+            CurReservation.StatusID = (int)ReservationStatuses.Confirmed;
+            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            //TravelAgenceMasterClass.resetTravelAgencyEntities();
+            var query = from r in TravelAgenceMasterClass.TravelAgencyContext.Reservations
+                        where
+                     (r.ReservationID == CurReservation.ReservationID)
+                        select r;
+            CurReservation = query.First();
+            Payment.createConfirmReservationTransaction(CurReservation);
+            Close();
+
         }
     }
 }

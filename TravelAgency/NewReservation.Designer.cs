@@ -90,6 +90,7 @@
             this.txtNetPrice = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboVendors = new System.Windows.Forms.ComboBox();
             this.ClientNamesGridView = new System.Windows.Forms.DataGridView();
             this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.errProvider = new System.Windows.Forms.ErrorProvider(this.components);
@@ -104,7 +105,6 @@
             this.lblReservationStatus = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.travelAgencyEntitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cboVendors = new System.Windows.Forms.ComboBox();
             this.gboxHotel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuadRoomsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TripleRoomsUpDown)).BeginInit();
@@ -754,6 +754,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Reservation Info";
             // 
+            // cboVendors
+            // 
+            this.cboVendors.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboVendors.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboVendors.FormattingEnabled = true;
+            this.cboVendors.Location = new System.Drawing.Point(83, 29);
+            this.cboVendors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cboVendors.Name = "cboVendors";
+            this.cboVendors.Size = new System.Drawing.Size(204, 24);
+            this.cboVendors.TabIndex = 68;
+            // 
             // ClientNamesGridView
             // 
             this.ClientNamesGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -873,6 +884,7 @@
             this.cmdConfirm.Text = "&Confirm Reservation";
             this.cmdConfirm.UseVisualStyleBackColor = true;
             this.cmdConfirm.Visible = false;
+            this.cmdConfirm.Click += new System.EventHandler(this.cmdConfirm_Click_1);
             // 
             // cmdCancelReservation
             // 
@@ -915,17 +927,6 @@
             // travelAgencyEntitiesBindingSource
             // 
             this.travelAgencyEntitiesBindingSource.DataSource = typeof(TravelAgency.TravelAgencyEntities);
-            // 
-            // cboVendors
-            // 
-            this.cboVendors.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cboVendors.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboVendors.FormattingEnabled = true;
-            this.cboVendors.Location = new System.Drawing.Point(83, 29);
-            this.cboVendors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cboVendors.Name = "cboVendors";
-            this.cboVendors.Size = new System.Drawing.Size(204, 24);
-            this.cboVendors.TabIndex = 68;
             // 
             // NewReservation
             // 
