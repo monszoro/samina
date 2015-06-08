@@ -16,6 +16,7 @@ namespace TravelAgency
     {
         public Reservation()
         {
+            this.LedgerTransactions = new HashSet<LedgerTransaction>();
             this.ReservationClients = new HashSet<ReservationClient>();
         }
     
@@ -40,6 +41,7 @@ namespace TravelAgency
         public virtual Client Client { get; set; }
         public virtual FlightReservation FlightReservation { get; set; }
         public virtual HotelReservation HotelReservation { get; set; }
+        public virtual ICollection<LedgerTransaction> LedgerTransactions { get; set; }
         public virtual ICollection<ReservationClient> ReservationClients { get; set; }
         public virtual ReservationStatus ReservationStatus { get; set; }
         public virtual ReservationType ReservationType { get; set; }

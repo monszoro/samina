@@ -16,6 +16,8 @@ namespace TravelAgency
     {
         public LedgerAccount()
         {
+            this.FinantialTransactions = new HashSet<FinantialTransaction>();
+            this.FinantialTransactions1 = new HashSet<FinantialTransaction>();
             this.LedgerTransactionDetails = new HashSet<LedgerTransactionDetail>();
         }
     
@@ -31,6 +33,8 @@ namespace TravelAgency
         public virtual Cashier Cashier { get; set; }
         public virtual Client Client { get; set; }
         public virtual Expens Expens { get; set; }
+        public virtual ICollection<FinantialTransaction> FinantialTransactions { get; set; }
+        public virtual ICollection<FinantialTransaction> FinantialTransactions1 { get; set; }
         public virtual GeneralLedgerAccount GeneralLedgerAccount { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }

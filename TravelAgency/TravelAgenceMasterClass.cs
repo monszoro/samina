@@ -10,7 +10,7 @@ namespace TravelAgency
        public static User CurrentUser;
        public static Branch CurrentBranch;
        public static TravelAgencyEntities TravelAgencyContext=new TravelAgencyEntities();
-
+       public const int MainAccountID = 1;
        public static void resetTravelAgencyEntities()
        {
            TravelAgencyContext = new TravelAgencyEntities();

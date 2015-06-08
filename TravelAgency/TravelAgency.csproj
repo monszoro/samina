@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPayment.Designer.cs">
+      <DependentUpon>AddPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Administration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="Expens.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FinantialTransaction.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="FlightReservation.cs">
@@ -335,6 +344,9 @@
     <Compile Include="VisaReservation.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddPayment.resx">
+      <DependentUpon>AddPayment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Administration.resx">
       <DependentUpon>Administration.cs</DependentUpon>
       <SubType>Designer</SubType>

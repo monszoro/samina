@@ -14,15 +14,12 @@ namespace TravelAgency
     
     public partial class LedgerTransactionDetail
     {
+        public int LedgerTransactionDetailsID { get; set; }
         public int LedgerTransactionID { get; set; }
-        public int CurrencyID { get; set; }
         public decimal Amount { get; set; }
-        public decimal ExchangeRate { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
         public int LedgerTransactionTypeID { get; set; }
         public int LedgerAccountID { get; set; }
     
-        public virtual Currency Currency { get; set; }
         public virtual LedgerAccount LedgerAccount { get; set; }
         public virtual LedgerTransaction LedgerTransaction { get; set; }
         public virtual LedgerTransactionType LedgerTransactionType { get; set; }

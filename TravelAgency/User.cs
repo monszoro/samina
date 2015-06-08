@@ -17,6 +17,7 @@ namespace TravelAgency
         public User()
         {
             this.Clients = new HashSet<Client>();
+            this.FinantialTransactions = new HashSet<FinantialTransaction>();
             this.Notes = new HashSet<Note>();
             this.Reservations = new HashSet<Reservation>();
             this.Vendors = new HashSet<Vendor>();
@@ -30,6 +31,7 @@ namespace TravelAgency
         public bool isActive { get; set; }
     
         public virtual ICollection<Client> Clients { get; set; }
+        public virtual ICollection<FinantialTransaction> FinantialTransactions { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
         public virtual UserGroup UserGroup { get; set; }

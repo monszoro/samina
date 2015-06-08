@@ -36,10 +36,12 @@ namespace TravelAgency
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<CustomerTransaction> CustomerTransactions { get; set; }
         public DbSet<Expens> Expenses { get; set; }
+        public DbSet<FinantialTransaction> FinantialTransactions { get; set; }
         public DbSet<FlightReservation> FlightReservations { get; set; }
         public DbSet<GeneralLedgerAccount> GeneralLedgerAccounts { get; set; }
         public DbSet<HotelReservation> HotelReservations { get; set; }
         public DbSet<LedgerAccount> LedgerAccounts { get; set; }
+        public DbSet<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
         public DbSet<LedgerTransaction> LedgerTransactions { get; set; }
         public DbSet<LedgerTransactionType> LedgerTransactionTypes { get; set; }
         public DbSet<Note> Notes { get; set; }
@@ -53,7 +55,6 @@ namespace TravelAgency
         public DbSet<User> Users { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<VisaReservation> VisaReservations { get; set; }
-        public DbSet<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
     
         public virtual int os_CreateIndexIfMissingOrDifferent(string tableName, string commaSeparatedColumns, string commaSeparatedIncludes, string optionalIndexName)
         {

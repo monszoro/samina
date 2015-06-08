@@ -16,13 +16,13 @@ namespace TravelAgency
     {
         public Currency()
         {
-            this.LedgerTransactionDetails = new HashSet<LedgerTransactionDetail>();
+            this.FinantialTransactions = new HashSet<FinantialTransaction>();
         }
     
         public int CurrencyID { get; set; }
         public string Name { get; set; }
         public string Sign { get; set; }
     
-        public virtual ICollection<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
+        public virtual ICollection<FinantialTransaction> FinantialTransactions { get; set; }
     }
 }

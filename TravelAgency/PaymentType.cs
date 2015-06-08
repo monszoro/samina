@@ -14,7 +14,14 @@ namespace TravelAgency
     
     public partial class PaymentType
     {
+        public PaymentType()
+        {
+            this.FinantialTransactions = new HashSet<FinantialTransaction>();
+        }
+    
         public int PaymentTypeID { get; set; }
         public string Name { get; set; }
+    
+        public virtual ICollection<FinantialTransaction> FinantialTransactions { get; set; }
     }
 }

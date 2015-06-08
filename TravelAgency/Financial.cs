@@ -44,7 +44,13 @@ namespace TravelAgency
         private void button2_Click(object sender, EventArgs e)
         {
             ManageCashiers t = new ManageCashiers();
-            t.ShowDialog();   
+            t.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            AddPayment AddPayment = new AddPayment();
+            AddPayment.ShowDialog();
         }     
   
     }

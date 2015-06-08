@@ -21,7 +21,11 @@ namespace TravelAgency
     
         public int LedgerTransactionID { get; set; }
         public string Description { get; set; }
+        public Nullable<long> FinantialTransactionID { get; set; }
+        public Nullable<int> ReservationID { get; set; }
     
+        public virtual FinantialTransaction FinantialTransaction { get; set; }
         public virtual ICollection<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
+        public virtual Reservation Reservation { get; set; }
     }
 }

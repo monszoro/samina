@@ -92,6 +92,22 @@
           <Property Name="ExpenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ExpenseName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="FinantialTransactions">
+          <Key>
+            <PropertyRef Name="FinantialTransactionID" />
+          </Key>
+          <Property Name="FinantialTransactionID" Type="bigint" Nullable="false" />
+          <Property Name="SourceAccountID" Type="int" Nullable="false" />
+          <Property Name="DestinationAccountID" Type="int" Nullable="false" />
+          <Property Name="PaymentTypeID" Type="int" Nullable="false" />
+          <Property Name="CurrencyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="24" Scale="12" Nullable="false" />
+          <Property Name="ExchangeRate" Type="decimal" Precision="24" Scale="12" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="38" Scale="13" StoreGeneratedPattern="Computed" />
+          <Property Name="CreationUserID" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="FlightReservations">
           <Key>
             <PropertyRef Name="ReservationID" />
@@ -137,22 +153,13 @@
           <Property Name="BankAccountID" Type="int" />
           <Property Name="ExpenseID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LedgerTransactionDetails">
           <Key>
-            <PropertyRef Name="LedgerTransactionID" />
-            <PropertyRef Name="CurrencyID" />
-            <PropertyRef Name="Amount" />
-            <PropertyRef Name="ExchangeRate" />
-            <PropertyRef Name="LedgerTransactionTypeID" />
-            <PropertyRef Name="LedgerAccountID" />
+            <PropertyRef Name="LedgerTransactionDetailsID" />
           </Key>
-          <Property Name="LedgerTransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CurrencyID" Type="int" Nullable="false" />
+          <Property Name="LedgerTransactionDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LedgerTransactionID" Type="int" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="24" Scale="12" Nullable="false" />
-          <Property Name="ExchangeRate" Type="decimal" Precision="24" Scale="12" Nullable="false" />
-          <Property Name="TotalAmount" Type="decimal" Precision="38" Scale="13" StoreGeneratedPattern="Computed" />
           <Property Name="LedgerTransactionTypeID" Type="int" Nullable="false" />
           <Property Name="LedgerAccountID" Type="int" Nullable="false" />
         </EntityType>
@@ -162,6 +169,8 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
           </Key>
           <Property Name="LedgerTransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FinantialTransactionID" Type="bigint" />
+          <Property Name="ReservationID" Type="int" />
         </EntityType>
         <EntityType Name="LedgerTransactionTypes">
           <Key>
@@ -332,6 +341,66 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FinantialTransactions_Currency">
+          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="FinantialTransactions">
+              <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_LedgerAccounts">
+          <End Role="LedgerAccounts" Type="Self.LedgerAccounts" Multiplicity="1" />
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LedgerAccounts">
+              <PropertyRef Name="LedgerAccountID" />
+            </Principal>
+            <Dependent Role="FinantialTransactions">
+              <PropertyRef Name="DestinationAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_LedgerAccounts1">
+          <End Role="LedgerAccounts" Type="Self.LedgerAccounts" Multiplicity="1" />
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LedgerAccounts">
+              <PropertyRef Name="LedgerAccountID" />
+            </Principal>
+            <Dependent Role="FinantialTransactions">
+              <PropertyRef Name="SourceAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_PaymentTypes">
+          <End Role="PaymentTypes" Type="Self.PaymentTypes" Multiplicity="1" />
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentTypes">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="FinantialTransactions">
+              <PropertyRef Name="PaymentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FinantialTransactions">
+              <PropertyRef Name="CreationUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FlightReservation_Reservations">
           <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
           <End Role="FlightReservations" Type="Self.FlightReservations" Multiplicity="0..1" />
@@ -428,18 +497,6 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LedgerTransactionDetails_Currency">
-          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
-          <End Role="LedgerTransactionDetails" Type="Self.LedgerTransactionDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="CurrencyID" />
-            </Principal>
-            <Dependent Role="LedgerTransactionDetails">
-              <PropertyRef Name="CurrencyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LedgerTransactionDetails_LedgerAccounts">
           <End Role="LedgerAccounts" Type="Self.LedgerAccounts" Multiplicity="1" />
           <End Role="LedgerTransactionDetails" Type="Self.LedgerTransactionDetails" Multiplicity="*" />
@@ -464,6 +521,18 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LedgerTransactions_LedgerTransactions">
+          <End Role="FinantialTransactions" Type="Self.FinantialTransactions" Multiplicity="0..1" />
+          <End Role="LedgerTransactions" Type="Self.LedgerTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinantialTransactions">
+              <PropertyRef Name="FinantialTransactionID" />
+            </Principal>
+            <Dependent Role="LedgerTransactions">
+              <PropertyRef Name="FinantialTransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LedgerTransactions_LedgerTransactionTypes">
           <End Role="LedgerTransactionTypes" Type="Self.LedgerTransactionTypes" Multiplicity="1" />
           <End Role="LedgerTransactionDetails" Type="Self.LedgerTransactionDetails" Multiplicity="*" />
@@ -473,6 +542,18 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
             </Principal>
             <Dependent Role="LedgerTransactionDetails">
               <PropertyRef Name="LedgerTransactionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerTransactions_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="0..1" />
+          <End Role="LedgerTransactions" Type="Self.LedgerTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ReservationID" />
+            </Principal>
+            <Dependent Role="LedgerTransactions">
+              <PropertyRef Name="ReservationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -671,10 +752,12 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
           <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerTransactions" EntityType="Self.CustomerTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FinantialTransactions" EntityType="Self.FinantialTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightReservations" EntityType="Self.FlightReservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeneralLedgerAccounts" EntityType="Self.GeneralLedgerAccounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HotelReservations" EntityType="Self.HotelReservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LedgerAccounts" EntityType="Self.LedgerAccounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LedgerTransactionDetails" EntityType="Self.LedgerTransactionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LedgerTransactions" EntityType="Self.LedgerTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LedgerTransactionTypes" EntityType="Self.LedgerTransactionTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
@@ -688,17 +771,6 @@ warning 6002: The table/view 'TravelAgency.dbo.LedgerTransactionDetails' does no
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisaReservations" EntityType="Self.VisaReservations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LedgerTransactionDetails" EntityType="Self.LedgerTransactionDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[LedgerTransactionDetails].[LedgerTransactionID] AS [LedgerTransactionID], 
-[LedgerTransactionDetails].[CurrencyID] AS [CurrencyID], 
-[LedgerTransactionDetails].[Amount] AS [Amount], 
-[LedgerTransactionDetails].[ExchangeRate] AS [ExchangeRate], 
-[LedgerTransactionDetails].[TotalAmount] AS [TotalAmount], 
-[LedgerTransactionDetails].[LedgerTransactionTypeID] AS [LedgerTransactionTypeID], 
-[LedgerTransactionDetails].[LedgerAccountID] AS [LedgerAccountID]
-FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_ClientGroupClients_ClientGroups" Association="Self.FK_ClientGroupClients_ClientGroups">
             <End Role="ClientGroups" EntitySet="ClientGroups" />
             <End Role="ClientGroupClients" EntitySet="ClientGroupClients" />
@@ -714,6 +786,26 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <AssociationSet Name="FK_Clients_Users" Association="Self.FK_Clients_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="Self.FK_FinantialTransactions_Currency">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_LedgerAccounts" Association="Self.FK_FinantialTransactions_LedgerAccounts">
+            <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_LedgerAccounts1" Association="Self.FK_FinantialTransactions_LedgerAccounts1">
+            <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_PaymentTypes" Association="Self.FK_FinantialTransactions_PaymentTypes">
+            <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_Users" Association="Self.FK_FinantialTransactions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_FlightReservation_Reservations" Association="Self.FK_FlightReservation_Reservations">
             <End Role="Reservations" EntitySet="Reservations" />
@@ -747,10 +839,6 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
           </AssociationSet>
-          <AssociationSet Name="FK_LedgerTransactionDetails_Currency" Association="Self.FK_LedgerTransactionDetails_Currency">
-            <End Role="Currency" EntitySet="Currency" />
-            <End Role="LedgerTransactionDetails" EntitySet="LedgerTransactionDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_LedgerTransactionDetails_LedgerAccounts" Association="Self.FK_LedgerTransactionDetails_LedgerAccounts">
             <End Role="LedgerAccounts" EntitySet="LedgerAccounts" />
             <End Role="LedgerTransactionDetails" EntitySet="LedgerTransactionDetails" />
@@ -759,9 +847,17 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             <End Role="LedgerTransactions" EntitySet="LedgerTransactions" />
             <End Role="LedgerTransactionDetails" EntitySet="LedgerTransactionDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactions_LedgerTransactions" Association="Self.FK_LedgerTransactions_LedgerTransactions">
+            <End Role="FinantialTransactions" EntitySet="FinantialTransactions" />
+            <End Role="LedgerTransactions" EntitySet="LedgerTransactions" />
+          </AssociationSet>
           <AssociationSet Name="FK_LedgerTransactions_LedgerTransactionTypes" Association="Self.FK_LedgerTransactions_LedgerTransactionTypes">
             <End Role="LedgerTransactionTypes" EntitySet="LedgerTransactionTypes" />
             <End Role="LedgerTransactionDetails" EntitySet="LedgerTransactionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactions_Reservations" Association="Self.FK_LedgerTransactions_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="LedgerTransactions" EntitySet="LedgerTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_Notes_Users" Association="Self.FK_Notes_Users">
             <End Role="Users" EntitySet="Users" />
@@ -863,10 +959,12 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
           <EntitySet Name="CustomerTransactions" EntityType="TravelAgencyModel.CustomerTransaction" />
           <EntitySet Name="Expenses" EntityType="TravelAgencyModel.Expens" />
+          <EntitySet Name="FinantialTransactions" EntityType="TravelAgencyModel.FinantialTransaction" />
           <EntitySet Name="FlightReservations" EntityType="TravelAgencyModel.FlightReservation" />
           <EntitySet Name="GeneralLedgerAccounts" EntityType="TravelAgencyModel.GeneralLedgerAccount" />
           <EntitySet Name="HotelReservations" EntityType="TravelAgencyModel.HotelReservation" />
           <EntitySet Name="LedgerAccounts" EntityType="TravelAgencyModel.LedgerAccount" />
+          <EntitySet Name="LedgerTransactionDetails" EntityType="TravelAgencyModel.LedgerTransactionDetail" />
           <EntitySet Name="LedgerTransactions" EntityType="TravelAgencyModel.LedgerTransaction" />
           <EntitySet Name="LedgerTransactionTypes" EntityType="TravelAgencyModel.LedgerTransactionType" />
           <EntitySet Name="Notes" EntityType="TravelAgencyModel.Note" />
@@ -880,7 +978,6 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <EntitySet Name="Users" EntityType="TravelAgencyModel.User" />
           <EntitySet Name="Vendors" EntityType="TravelAgencyModel.Vendor" />
           <EntitySet Name="VisaReservations" EntityType="TravelAgencyModel.VisaReservation" />
-          <EntitySet Name="LedgerTransactionDetails" EntityType="TravelAgencyModel.LedgerTransactionDetail" />
           <AssociationSet Name="FK_LedgerAccounts_BankAccounts" Association="TravelAgencyModel.FK_LedgerAccounts_BankAccounts">
             <End Role="BankAccount" EntitySet="BankAccounts" />
             <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
@@ -909,13 +1006,33 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             <End Role="Client" EntitySet="Clients" />
             <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK_LedgerTransactionDetails_Currency" Association="TravelAgencyModel.FK_LedgerTransactionDetails_Currency">
+          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="TravelAgencyModel.FK_FinantialTransactions_Currency">
             <End Role="Currency" EntitySet="Currencies" />
-            <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_LedgerAccounts_Expenses" Association="TravelAgencyModel.FK_LedgerAccounts_Expenses">
             <End Role="Expens" EntitySet="Expenses" />
             <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_LedgerAccounts" Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts">
+            <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_LedgerAccounts1" Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1">
+            <End Role="LedgerAccount" EntitySet="LedgerAccounts" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_PaymentTypes" Association="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_Users" Association="TravelAgencyModel.FK_FinantialTransactions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactions_LedgerTransactions" Association="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions">
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+            <End Role="LedgerTransaction" EntitySet="LedgerTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_FlightReservation_Reservations" Association="TravelAgencyModel.FK_FlightReservation_Reservations">
             <End Role="Reservation" EntitySet="Reservations" />
@@ -944,6 +1061,10 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <AssociationSet Name="FK_LedgerTransactions_LedgerTransactionTypes" Association="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes">
             <End Role="LedgerTransactionType" EntitySet="LedgerTransactionTypes" />
             <End Role="LedgerTransactionDetail" EntitySet="LedgerTransactionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerTransactions_Reservations" Association="TravelAgencyModel.FK_LedgerTransactions_Reservations">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="LedgerTransaction" EntitySet="LedgerTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_Notes_Users" Association="TravelAgencyModel.FK_Notes_Users">
             <End Role="User" EntitySet="Users" />
@@ -1056,7 +1177,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
           <Property Name="Sign" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_Currency" FromRole="Currency" ToRole="LedgerTransactionDetail" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="Currency" ToRole="FinantialTransaction" />
         </EntityType>
         <EntityType Name="CustomerTransaction">
           <Key>
@@ -1076,6 +1197,28 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <Property Name="ExpenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpenseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="LedgerAccounts" Relationship="TravelAgencyModel.FK_LedgerAccounts_Expenses" FromRole="Expens" ToRole="LedgerAccount" />
+        </EntityType>
+        <EntityType Name="FinantialTransaction">
+          <Key>
+            <PropertyRef Name="FinantialTransactionID" />
+          </Key>
+          <Property Name="FinantialTransactionID" Type="Int64" Nullable="false" />
+          <Property Name="SourceAccountID" Type="Int32" Nullable="false" />
+          <Property Name="DestinationAccountID" Type="Int32" Nullable="false" />
+          <Property Name="PaymentTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
+          <Property Name="ExchangeRate" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="38" Scale="13" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreationUserID" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="FinantialTransaction" ToRole="Currency" />
+          <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
+          <NavigationProperty Name="LedgerAccount1" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
+          <NavigationProperty Name="PaymentType" Relationship="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" FromRole="FinantialTransaction" ToRole="PaymentType" />
+          <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_FinantialTransactions_Users" FromRole="FinantialTransaction" ToRole="User" />
+          <NavigationProperty Name="LedgerTransactions" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="FinantialTransaction" ToRole="LedgerTransaction" />
         </EntityType>
         <EntityType Name="FlightReservation">
           <Key>
@@ -1128,9 +1271,24 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <NavigationProperty Name="Cashier" Relationship="TravelAgencyModel.FK_LedgerAccounts_Cashiers" FromRole="LedgerAccount" ToRole="Cashier" />
           <NavigationProperty Name="Client" Relationship="TravelAgencyModel.FK_LedgerAccounts_Clients" FromRole="LedgerAccount" ToRole="Client" />
           <NavigationProperty Name="Expens" Relationship="TravelAgencyModel.FK_LedgerAccounts_Expenses" FromRole="LedgerAccount" ToRole="Expens" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" FromRole="LedgerAccount" ToRole="FinantialTransaction" />
+          <NavigationProperty Name="FinantialTransactions1" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" FromRole="LedgerAccount" ToRole="FinantialTransaction" />
           <NavigationProperty Name="GeneralLedgerAccount" Relationship="TravelAgencyModel.FK_LedgerAccounts_GeneralLedgerAccounts" FromRole="LedgerAccount" ToRole="GeneralLedgerAccount" />
           <NavigationProperty Name="Vendor" Relationship="TravelAgencyModel.FK_LedgerAccounts_Vendors" FromRole="LedgerAccount" ToRole="Vendor" />
           <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerAccount" ToRole="LedgerTransactionDetail" />
+        </EntityType>
+        <EntityType Name="LedgerTransactionDetail">
+          <Key>
+            <PropertyRef Name="LedgerTransactionDetailsID" />
+          </Key>
+          <Property Name="LedgerTransactionDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
+          <Property Name="LedgerTransactionTypeID" Type="Int32" Nullable="false" />
+          <Property Name="LedgerAccountID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerTransactionDetail" ToRole="LedgerAccount" />
+          <NavigationProperty Name="LedgerTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransactionDetail" ToRole="LedgerTransaction" />
+          <NavigationProperty Name="LedgerTransactionType" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" FromRole="LedgerTransactionDetail" ToRole="LedgerTransactionType" />
         </EntityType>
         <EntityType Name="LedgerTransaction">
           <Key>
@@ -1138,7 +1296,11 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           </Key>
           <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FinantialTransactionID" Type="Int64" />
+          <Property Name="ReservationID" Type="Int32" />
+          <NavigationProperty Name="FinantialTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="LedgerTransaction" ToRole="FinantialTransaction" />
           <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransaction" ToRole="LedgerTransactionDetail" />
+          <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_LedgerTransactions_Reservations" FromRole="LedgerTransaction" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="LedgerTransactionType">
           <Key>
@@ -1165,6 +1327,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           </Key>
           <Property Name="PaymentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" FromRole="PaymentType" ToRole="FinantialTransaction" />
         </EntityType>
         <EntityType Name="ReservationClient">
           <Key>
@@ -1199,6 +1362,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <NavigationProperty Name="Client" Relationship="TravelAgencyModel.FK_Reservations_Clients" FromRole="Reservation" ToRole="Client" />
           <NavigationProperty Name="FlightReservation" Relationship="TravelAgencyModel.FK_FlightReservation_Reservations" FromRole="Reservation" ToRole="FlightReservation" />
           <NavigationProperty Name="HotelReservation" Relationship="TravelAgencyModel.FK_HotelReservation_Reservations" FromRole="Reservation" ToRole="HotelReservation" />
+          <NavigationProperty Name="LedgerTransactions" Relationship="TravelAgencyModel.FK_LedgerTransactions_Reservations" FromRole="Reservation" ToRole="LedgerTransaction" />
           <NavigationProperty Name="ReservationClients" Relationship="TravelAgencyModel.FK_ReservationClients_Reservations" FromRole="Reservation" ToRole="ReservationClient" />
           <NavigationProperty Name="ReservationStatus" Relationship="TravelAgencyModel.FK_Reservations_ReservationStatuses" FromRole="Reservation" ToRole="ReservationStatus" />
           <NavigationProperty Name="ReservationType" Relationship="TravelAgencyModel.FK_Reservations_ReservationTypes" FromRole="Reservation" ToRole="ReservationType" />
@@ -1257,6 +1421,7 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <Property Name="GroupID" Type="Int32" Nullable="false" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Clients" Relationship="TravelAgencyModel.FK_Clients_Users" FromRole="User" ToRole="Client" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Users" FromRole="User" ToRole="FinantialTransaction" />
           <NavigationProperty Name="Notes" Relationship="TravelAgencyModel.FK_Notes_Users" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="Reservations" Relationship="TravelAgencyModel.FK_Reservations_Users" FromRole="User" ToRole="Reservation" />
           <NavigationProperty Name="UserGroup" Relationship="TravelAgencyModel.FK_Users_UserGroups" FromRole="User" ToRole="UserGroup" />
@@ -1285,27 +1450,6 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
           <Property Name="Country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="VisaType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_VisaReservation_Reservations" FromRole="VisaReservation" ToRole="Reservation" />
-        </EntityType>
-        <EntityType Name="LedgerTransactionDetail">
-          <Key>
-            <PropertyRef Name="LedgerTransactionID" />
-            <PropertyRef Name="CurrencyID" />
-            <PropertyRef Name="Amount" />
-            <PropertyRef Name="ExchangeRate" />
-            <PropertyRef Name="LedgerTransactionTypeID" />
-            <PropertyRef Name="LedgerAccountID" />
-          </Key>
-          <Property Name="LedgerTransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CurrencyID" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
-          <Property Name="ExchangeRate" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="38" Scale="13" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="LedgerTransactionTypeID" Type="Int32" Nullable="false" />
-          <Property Name="LedgerAccountID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_Currency" FromRole="LedgerTransactionDetail" ToRole="Currency" />
-          <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" FromRole="LedgerTransactionDetail" ToRole="LedgerAccount" />
-          <NavigationProperty Name="LedgerTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransactionDetail" ToRole="LedgerTransaction" />
-          <NavigationProperty Name="LedgerTransactionType" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" FromRole="LedgerTransactionDetail" ToRole="LedgerTransactionType" />
         </EntityType>
         <Association Name="FK_LedgerAccounts_BankAccounts">
           <End Type="TravelAgencyModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -1391,14 +1535,14 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LedgerTransactionDetails_Currency">
+        <Association Name="FK_FinantialTransactions_Currency">
           <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
-          <End Type="TravelAgencyModel.LedgerTransactionDetail" Role="LedgerTransactionDetail" Multiplicity="*" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Currency">
               <PropertyRef Name="CurrencyID" />
             </Principal>
-            <Dependent Role="LedgerTransactionDetail">
+            <Dependent Role="FinantialTransaction">
               <PropertyRef Name="CurrencyID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1412,6 +1556,66 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             </Principal>
             <Dependent Role="LedgerAccount">
               <PropertyRef Name="ExpenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_LedgerAccounts">
+          <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LedgerAccount">
+              <PropertyRef Name="LedgerAccountID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="DestinationAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_LedgerAccounts1">
+          <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LedgerAccount">
+              <PropertyRef Name="LedgerAccountID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="SourceAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_PaymentTypes">
+          <End Type="TravelAgencyModel.PaymentType" Role="PaymentType" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="PaymentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinantialTransactions_Users">
+          <End Type="TravelAgencyModel.User" Role="User" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="CreationUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerTransactions_LedgerTransactions">
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="0..1" />
+          <End Type="TravelAgencyModel.LedgerTransaction" Role="LedgerTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinantialTransaction">
+              <PropertyRef Name="FinantialTransactionID" />
+            </Principal>
+            <Dependent Role="LedgerTransaction">
+              <PropertyRef Name="FinantialTransactionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1496,6 +1700,18 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
             </Principal>
             <Dependent Role="LedgerTransactionDetail">
               <PropertyRef Name="LedgerTransactionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerTransactions_Reservations">
+          <End Type="TravelAgencyModel.Reservation" Role="Reservation" Multiplicity="0..1" />
+          <End Type="TravelAgencyModel.LedgerTransaction" Role="LedgerTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ReservationID" />
+            </Principal>
+            <Dependent Role="LedgerTransaction">
+              <PropertyRef Name="ReservationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1717,6 +1933,23 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FinantialTransactions">
+            <EntityTypeMapping TypeName="TravelAgencyModel.FinantialTransaction">
+              <MappingFragment StoreEntitySet="FinantialTransactions">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="CreationUserID" ColumnName="CreationUserID" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+                <ScalarProperty Name="DestinationAccountID" ColumnName="DestinationAccountID" />
+                <ScalarProperty Name="SourceAccountID" ColumnName="SourceAccountID" />
+                <ScalarProperty Name="FinantialTransactionID" ColumnName="FinantialTransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FlightReservations">
             <EntityTypeMapping TypeName="TravelAgencyModel.FlightReservation">
               <MappingFragment StoreEntitySet="FlightReservations">
@@ -1766,9 +1999,22 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LedgerTransactionDetails">
+            <EntityTypeMapping TypeName="TravelAgencyModel.LedgerTransactionDetail">
+              <MappingFragment StoreEntitySet="LedgerTransactionDetails">
+                <ScalarProperty Name="LedgerAccountID" ColumnName="LedgerAccountID" />
+                <ScalarProperty Name="LedgerTransactionTypeID" ColumnName="LedgerTransactionTypeID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LedgerTransactionID" ColumnName="LedgerTransactionID" />
+                <ScalarProperty Name="LedgerTransactionDetailsID" ColumnName="LedgerTransactionDetailsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LedgerTransactions">
             <EntityTypeMapping TypeName="TravelAgencyModel.LedgerTransaction">
               <MappingFragment StoreEntitySet="LedgerTransactions">
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+                <ScalarProperty Name="FinantialTransactionID" ColumnName="FinantialTransactionID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="LedgerTransactionID" ColumnName="LedgerTransactionID" />
               </MappingFragment>
@@ -1904,19 +2150,6 @@ FROM [dbo].[LedgerTransactionDetails] AS [LedgerTransactionDetails]</DefiningQue
                 <ScalarProperty Name="VisaType" ColumnName="VisaType" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LedgerTransactionDetails">
-            <EntityTypeMapping TypeName="TravelAgencyModel.LedgerTransactionDetail">
-              <MappingFragment StoreEntitySet="LedgerTransactionDetails">
-                <ScalarProperty Name="LedgerAccountID" ColumnName="LedgerAccountID" />
-                <ScalarProperty Name="LedgerTransactionTypeID" ColumnName="LedgerTransactionTypeID" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
-                <ScalarProperty Name="LedgerTransactionID" ColumnName="LedgerTransactionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
