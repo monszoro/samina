@@ -6,15 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using TravelAgency.Util;
 
 namespace TravelAgency
 {
-    public partial class AddPayment : Form
+    public partial class ClientRefund : Form
     {
-        static int VISA_ID = 3;
         static int LE = 1;
 
-        public AddPayment()
+        public ClientRefund()
         {
             InitializeComponent();
             LoadComboBoxes();
@@ -75,7 +75,7 @@ namespace TravelAgency
         private void cboPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
             PaymentType paymentType = (PaymentType)cboPaymentTypes.SelectedItem;
-            if (paymentType.PaymentTypeID == VISA_ID)
+            if (paymentType.IsBankOperation)
             {
                 pnlBankAccount.Show();
                 pnlCashier.Hide();
@@ -122,7 +122,7 @@ namespace TravelAgency
 
             // payment type
             PaymentType paymentType = (PaymentType)cboPaymentTypes.SelectedItem;
-            if (paymentType.PaymentTypeID == VISA_ID)
+            if (paymentType.IsBankOperation)
             {
                 // bank account
                 if (cboBankAccounts.SelectedItem == null)
@@ -169,8 +169,29 @@ namespace TravelAgency
             {
                 errProvider.SetError(nudExchangeRate, "");
             }
-        }
 
+            if (!ExitSave)
+            {
+
+                Client client = (Client)cboClients.SelectedItem;
+                PaymentData paymentData = new PaymentData();
+                paymentData.Amount = nudAmount.Value;
+                paymentData.PaymentType = paymentType;
+                paymentData.Currency = (Currency)cboCurrencies.SelectedItem;
+                paymentData.ExchangeRate = nudExchangeRate.Value;
+
+                if (paymentType.IsBankOperation)
+                {
+                    Payment.bankAccountToClient((BankAccount)cboBankAccounts.SelectedItem,client,paymentData);
+                }
+                else
+                {
+                    Payment.cashierToClient((Cashier)cboCashiers.SelectedItem,client,  paymentData);
+                }
+                Close();
+            }
+        }
+        
         
     }
 }

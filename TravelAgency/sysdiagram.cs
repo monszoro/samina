@@ -12,17 +12,12 @@ namespace TravelAgency
     using System;
     using System.Collections.Generic;
     
-    public partial class PaymentType
+    public partial class sysdiagram
     {
-        public PaymentType()
-        {
-            this.FinantialTransactions = new HashSet<FinantialTransaction>();
-        }
-    
-        public int PaymentTypeID { get; set; }
-        public string Name { get; set; }
-        public bool IsBankOperation { get; set; }
-    
-        public virtual ICollection<FinantialTransaction> FinantialTransactions { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

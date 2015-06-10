@@ -1,6 +1,6 @@
 ﻿namespace TravelAgency
 {
-    partial class AddPayment
+    partial class ExpensesPayment
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.lblAccountNumber = new System.Windows.Forms.Label();
             this.cboCashiers = new System.Windows.Forms.ComboBox();
-            this.cboClients = new System.Windows.Forms.ComboBox();
+            this.cboExpenses = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboBankAccounts = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -76,26 +76,26 @@
             this.cboCashiers.Size = new System.Drawing.Size(204, 21);
             this.cboCashiers.TabIndex = 69;
             // 
-            // cboClients
+            // cboExpenses
             // 
-            this.cboClients.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cboClients.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboClients.FormattingEnabled = true;
-            this.cboClients.Location = new System.Drawing.Point(97, 98);
-            this.cboClients.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cboClients.Name = "cboClients";
-            this.cboClients.Size = new System.Drawing.Size(204, 21);
-            this.cboClients.TabIndex = 71;
+            this.cboExpenses.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboExpenses.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboExpenses.FormattingEnabled = true;
+            this.cboExpenses.Location = new System.Drawing.Point(97, 98);
+            this.cboExpenses.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cboExpenses.Name = "cboExpenses";
+            this.cboExpenses.Size = new System.Drawing.Size(204, 21);
+            this.cboExpenses.TabIndex = 71;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 101);
+            this.label1.Location = new System.Drawing.Point(45, 101);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 70;
-            this.label1.Text = "Client:";
+            this.label1.Text = "Expens:";
             // 
             // cboBankAccounts
             // 
@@ -228,11 +228,11 @@
             // 
             // nudAmount
             // 
-            this.nudAmount.DecimalPlaces = 3;
+            this.nudAmount.DecimalPlaces = 2;
             this.nudAmount.Location = new System.Drawing.Point(97, 126);
             this.nudAmount.Maximum = new decimal(new int[] {
-            100000000,
-            0,
+            1410065408,
+            2,
             0,
             0});
             this.nudAmount.Minimum = new decimal(new int[] {
@@ -251,8 +251,8 @@
             this.nudExchangeRate.DecimalPlaces = 3;
             this.nudExchangeRate.Location = new System.Drawing.Point(97, 192);
             this.nudExchangeRate.Maximum = new decimal(new int[] {
-            10000000,
-            0,
+            1410065408,
+            2,
             0,
             0});
             this.nudExchangeRate.Minimum = new decimal(new int[] {
@@ -270,11 +270,11 @@
             0,
             0});
             // 
-            // AddPayment
+            // ExpensesPayment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 261);
+            this.ClientSize = new System.Drawing.Size(366, 266);
             this.Controls.Add(this.nudExchangeRate);
             this.Controls.Add(this.nudAmount);
             this.Controls.Add(this.btnSave);
@@ -287,10 +287,11 @@
             this.Controls.Add(this.cboPaymentTypes);
             this.Controls.Add(this.pnlCashier);
             this.Controls.Add(this.pnlBankAccount);
-            this.Controls.Add(this.cboClients);
+            this.Controls.Add(this.cboExpenses);
             this.Controls.Add(this.label1);
-            this.Name = "AddPayment";
-            this.Text = "Add Payment";
+            this.MinimumSize = new System.Drawing.Size(382, 305);
+            this.Name = "ExpensesPayment";
+            this.Text = "Expenses Payment";
             this.pnlBankAccount.ResumeLayout(false);
             this.pnlBankAccount.PerformLayout();
             this.pnlCashier.ResumeLayout(false);
@@ -307,7 +308,7 @@
 
         internal System.Windows.Forms.Label lblAccountNumber;
         internal System.Windows.Forms.ComboBox cboCashiers;
-        internal System.Windows.Forms.ComboBox cboClients;
+        internal System.Windows.Forms.ComboBox cboExpenses;
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.ComboBox cboBankAccounts;
         internal System.Windows.Forms.Label label2;

@@ -1,6 +1,6 @@
 ﻿namespace TravelAgency
 {
-    partial class Administration
+    partial class UsersGroups
     {
         /// <summary>
         /// Required designer variable.

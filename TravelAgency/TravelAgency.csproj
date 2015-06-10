@@ -64,17 +64,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPayment.cs">
+    <Compile Include="ClientRefund.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddPayment.Designer.cs">
-      <DependentUpon>AddPayment.cs</DependentUpon>
+    <Compile Include="ClientRefund.Designer.cs">
+      <DependentUpon>ClientRefund.cs</DependentUpon>
     </Compile>
-    <Compile Include="Administration.cs">
+    <Compile Include="ExpensesPayment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Administration.Designer.cs">
-      <DependentUpon>Administration.cs</DependentUpon>
+    <Compile Include="ExpensesPayment.Designer.cs">
+      <DependentUpon>ExpensesPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VendorPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VendorPayment.Designer.cs">
+      <DependentUpon>VendorPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientPayment.Designer.cs">
+      <DependentUpon>ClientPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Adminstration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adminstration.Designer.cs">
+      <DependentUpon>Adminstration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UsersGroups.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UsersGroups.Designer.cs">
+      <DependentUpon>UsersGroups.cs</DependentUpon>
     </Compile>
     <Compile Include="AddEditClientGroup.cs">
       <SubType>Form</SubType>
@@ -255,6 +279,9 @@
     <Compile Include="ManageVendors.Designer.cs">
       <DependentUpon>ManageVendors.cs</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ticket.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
@@ -338,17 +365,30 @@
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="Util\Payment.cs" />
+    <Compile Include="Util\PaymentData.cs" />
     <Compile Include="Vendor.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="VisaReservation.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddPayment.resx">
-      <DependentUpon>AddPayment.cs</DependentUpon>
+    <EmbeddedResource Include="ClientRefund.resx">
+      <DependentUpon>ClientRefund.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Administration.resx">
-      <DependentUpon>Administration.cs</DependentUpon>
+    <EmbeddedResource Include="ExpensesPayment.resx">
+      <DependentUpon>ExpensesPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VendorPayment.resx">
+      <DependentUpon>VendorPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientPayment.resx">
+      <DependentUpon>ClientPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adminstration.resx">
+      <DependentUpon>Adminstration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UsersGroups.resx">
+      <DependentUpon>UsersGroups.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AddEditClientGroup.resx">

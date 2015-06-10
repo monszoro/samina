@@ -50,6 +50,7 @@ namespace TravelAgency
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationStatus> ReservationStatuses { get; set; }
         public DbSet<ReservationType> ReservationTypes { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<User> Users { get; set; }

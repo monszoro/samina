@@ -115,13 +115,13 @@ namespace TravelAgency
         {
             foreach (Form f in Application.OpenForms)
             {
-                if (f.GetType() == typeof(Administration))
+                if (f.GetType() == typeof(Adminstration))
                 {
                     f.WindowState = System.Windows.Forms.FormWindowState.Maximized;
                     return;
                 }
             }
-            Administration m = new Administration();
+            Adminstration m = new Adminstration();
             m.MdiParent = this;
             m.WindowState = FormWindowState.Maximized;
             m.Show();

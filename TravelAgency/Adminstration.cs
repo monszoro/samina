@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace TravelAgency
 {
-    public partial class Financial : Form
+    public partial class Adminstration : Form
     {
-        public Financial()
+        public Adminstration()
         {
             InitializeComponent();
            
@@ -31,26 +31,26 @@ namespace TravelAgency
 
         private void button1_Click(object sender, EventArgs e)
         {
-            VendorPayment t = new VendorPayment();
+            ManageBankAccounts t = new ManageBankAccounts();
             t.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ExpensesPayment t = new ExpensesPayment();
+            ManageExpenses  t = new ManageExpenses();
             t.ShowDialog();         
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ClientPayment clientPayment = new ClientPayment();
-            clientPayment.ShowDialog();
+            ManageCashiers t = new ManageCashiers();
+            t.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ClientRefund clientRefund = new ClientRefund();
-            clientRefund.ShowDialog();
+            UsersGroups usersGroups = new UsersGroups();
+            usersGroups.ShowDialog();
         }     
   
     }

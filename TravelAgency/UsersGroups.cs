@@ -8,9 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 namespace TravelAgency
 {
-    public partial class Administration : Form
+    public partial class UsersGroups : Form
     {
-        public Administration()
+        public UsersGroups()
         {
             InitializeComponent();
             LoadGroups();
