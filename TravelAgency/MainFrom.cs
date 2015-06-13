@@ -147,6 +147,14 @@ namespace TravelAgency
 
         private void btnFinancial_Click(object sender, EventArgs e)
         {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.GetType() == typeof(Financial))
+                {
+                    f.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+                    return;
+                }
+            }
             Financial m = new Financial();
             m.MdiParent = this;
             m.WindowState = FormWindowState.Maximized;
