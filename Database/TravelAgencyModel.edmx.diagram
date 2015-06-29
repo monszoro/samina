@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="009a9382ca474932950fca326631d358" Name="Diagram1">
+        <EntityTypeShape EntityType="TravelAgencyModel.BankAccount" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Branch" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Cashier" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.ClientGroup" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Client" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Currency" Width="1.5" PointX="7.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.CustomerTransaction" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Expens" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.FinantialTransaction" Width="1.5" PointX="9.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.FlightReservation" Width="1.5" PointX="12.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.GeneralLedgerAccount" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.HotelReservation" Width="1.5" PointX="12.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.LedgerAccount" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.LedgerTransactionDetail" Width="1.5" PointX="18" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.LedgerTransaction" Width="1.5" PointX="15.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.LedgerTransactionType" Width="1.5" PointX="15.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Note" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.PaymentType" Width="1.5" PointX="7.5" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.ReservationClient" Width="1.5" PointX="12.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Reservation" Width="1.5" PointX="10.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.ReservationStatus" Width="1.5" PointX="8.25" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.ReservationType" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Ticket" Width="1.5" PointX="7.5" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.UserGroup" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.User" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Vendor" Width="1.5" PointX="5.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyModel.VisaReservation" Width="1.5" PointX="12.75" PointY="21.625" IsExpanded="true" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_BankAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Clients_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Cashiers" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Clients_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Reservations_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Tickets_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_Currency" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Expenses" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FlightReservation_Reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_GeneralLedgerAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_HotelReservation_Reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactionTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_LedgerTransactions_Reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Notes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_ReservationClients_Reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Reservations_ReservationStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Reservations_ReservationTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Reservations_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Reservations_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_VisaReservation_Reservations" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Users_UserGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.FK_Vendors_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TravelAgencyModel.ClientGroupClients" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

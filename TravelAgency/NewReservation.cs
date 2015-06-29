@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.IO;
 using TravelAgency.Util;
 using System.Data.Linq;
+using Reporting;
+using Database;
 namespace TravelAgency
 {
     public partial class NewReservation : Form
@@ -739,6 +741,12 @@ private void  saveNewReservation(Vendor vendor) {
             Payment.createConfirmReservationTransaction(CurReservation);
             Close();
 
+        }
+
+        private void CmdPrint_Click(object sender, EventArgs e)
+        {
+           ReportingForm rf = new ReportingForm();
+           rf.viewReservationReport(CurReservation);
         }
     }
 }

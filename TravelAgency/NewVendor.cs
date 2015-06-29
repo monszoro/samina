@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using Database;
 namespace TravelAgency
 {
     public partial class NewVendor : Form
@@ -36,7 +37,7 @@ namespace TravelAgency
         private void cmdSave_Click(object sender, EventArgs e)
         {
 
-            TravelAgencyEntities t = new TravelAgencyEntities();
+         //   TravelAgencyEntities t = new TravelAgencyEntities();
             //Client c = new Client();
 
             //  t.AddToClients(Client.CreateClient(1, "sami", "a@a.com", "Sami", "Ahmed"));
