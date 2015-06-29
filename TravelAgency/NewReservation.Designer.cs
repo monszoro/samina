@@ -104,7 +104,6 @@
             this.cmdCancelReservation = new System.Windows.Forms.Button();
             this.lblReservationStatus = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.travelAgencyEntitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gboxHotel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuadRoomsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TripleRoomsUpDown)).BeginInit();
@@ -116,7 +115,6 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ClientNamesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.travelAgencyEntitiesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // fileDialog
@@ -814,7 +812,7 @@
             this.CmdPrint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CmdPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.CmdPrint.UseVisualStyleBackColor = true;
-            this.CmdPrint.Visible = false;
+            this.CmdPrint.Click += new System.EventHandler(this.CmdPrint_Click);
             // 
             // cmdReOpen
             // 
@@ -924,10 +922,6 @@
             this.lblStatus.Text = "Status:";
             this.lblStatus.Visible = false;
             // 
-            // travelAgencyEntitiesBindingSource
-            // 
-            this.travelAgencyEntitiesBindingSource.DataSource = typeof(TravelAgency.TravelAgencyEntities);
-            // 
             // NewReservation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -959,6 +953,7 @@
             this.Font = new System.Drawing.Font("Georgia", 9.75F);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "NewReservation";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New Reservation";
             this.gboxHotel.ResumeLayout(false);
             this.gboxHotel.PerformLayout();
@@ -976,7 +971,6 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ClientNamesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.travelAgencyEntitiesBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1038,7 +1032,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ErrorProvider errProvider;
         internal System.Windows.Forms.ComboBox cboclients;
-        private System.Windows.Forms.BindingSource travelAgencyEntitiesBindingSource;
         private System.Windows.Forms.DataGridView ClientNamesGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
         internal System.Windows.Forms.Button CmdPrint;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Database;
 namespace TravelAgency
 {
     public partial class UsersGroups : Form
@@ -42,7 +43,7 @@ namespace TravelAgency
 
         private void cmdSave_Click(object sender, EventArgs e)
         {
-            TravelAgencyEntities t = new TravelAgencyEntities();
+          //  TravelAgencyEntities t = new TravelAgencyEntities();
         }
 
         private void cmdNew_Click(object sender, EventArgs e)

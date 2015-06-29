@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Database;
 namespace TravelAgency
 {
     public partial class ManageVendors : Form
@@ -29,8 +30,7 @@ namespace TravelAgency
         private void cmdSearch_Click(object sender, EventArgs e)
         {
             dgvExpense.Rows.Clear();
-            TravelAgencyEntities t = new TravelAgencyEntities();
-            var query = from V in t.Vendors 
+            var query = from V in TravelAgenceMasterClass.TravelAgencyContext.Vendors 
                         where V.Name.Contains(txtName.Text) 
                         && ( V.Phone==null || V.Phone.Contains(txtPhone.Text))
                         && (V.Email==null||V.Email.Contains(txtEmail.Text))
