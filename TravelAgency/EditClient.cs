@@ -121,7 +121,7 @@ namespace TravelAgency
             }
             if (ExitSave == true)
                 return;
-            cl = TravelAgenceMasterClass.TravelAgencyContext.Clients.Where(u => u.ClientID == cl.ClientID).SingleOrDefault();
+            cl = TravelAgenceMasterClass.getTravelAgencyContext().Clients.Where(u => u.ClientID == cl.ClientID).SingleOrDefault();
             if (!Directory.Exists(TravelAgenceMasterClass.CurrentBranch.FilesPath))
             {
                 Directory.CreateDirectory(TravelAgenceMasterClass.CurrentBranch.FilesPath);
@@ -154,7 +154,7 @@ namespace TravelAgency
             cl.DateCreated = DateTime.Now;
             cl.DateOfBirth = dtpDOB.Value;
 
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             foreach (DataGridViewRow row in dgvAttachments.Rows)
             {
                 if(!row.Visible)

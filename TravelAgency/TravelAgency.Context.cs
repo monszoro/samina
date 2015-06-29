@@ -33,7 +33,6 @@ namespace TravelAgency
         public DbSet<Cashier> Cashiers { get; set; }
         public DbSet<ClientGroup> ClientGroups { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Currency> Currencies { get; set; }
         public DbSet<CustomerTransaction> CustomerTransactions { get; set; }
         public DbSet<Expens> Expenses { get; set; }
         public DbSet<FinantialTransaction> FinantialTransactions { get; set; }
@@ -56,6 +55,7 @@ namespace TravelAgency
         public DbSet<User> Users { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<VisaReservation> VisaReservations { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
     
         public virtual int os_CreateIndexIfMissingOrDifferent(string tableName, string commaSeparatedColumns, string commaSeparatedIncludes, string optionalIndexName)
         {

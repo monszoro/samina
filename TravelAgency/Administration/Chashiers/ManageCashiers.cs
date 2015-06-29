@@ -20,7 +20,7 @@ namespace TravelAgency
         public void loadcashiers()
         {
             dgvBankAccounts.Rows.Clear();
-             var query = from cash in TravelAgenceMasterClass.TravelAgencyContext.Cashiers
+             var query = from cash in TravelAgenceMasterClass.getTravelAgencyContext().Cashiers
                          select cash;
             foreach (var cashier in query)
             {

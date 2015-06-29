@@ -9,10 +9,9 @@ using System.Windows.Forms;
 using System.IO;
 namespace TravelAgency
 {
-    public partial class NewBankAccount : Form
+    public partial class NewCashier : Form
     {
-                private bool FileDialogOpenedFromImage;
-                public NewBankAccount()
+       public NewCashier()
         {
             InitializeComponent();
         }
@@ -27,20 +26,11 @@ namespace TravelAgency
             }
             else
                 errorProvider1.SetError(txtName, "");
-            if (string.IsNullOrEmpty(txtNumber.Text))
-            {
-                errorProvider1.SetError(txtNumber, "Required Field");
-                ExitSave = true;
-            }
-            else
-                errorProvider1.SetError(txtNumber, "");
-            if (ExitSave == true)
+                      if (ExitSave == true)
                     return;
-
-            BankAccount b =new BankAccount();
-            b.BankName = txtName.Text;
-            b.AccountNumber = txtNumber.Text;
-            TravelAgenceMasterClass.getTravelAgencyContext().BankAccounts.Add(b);
+                      Cashier c = new Cashier();
+            c.Name = txtName.Text;
+            TravelAgenceMasterClass.getTravelAgencyContext().Cashiers.Add(c);
             TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }

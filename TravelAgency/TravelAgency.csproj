@@ -64,11 +64,62 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administration\Adminstration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Adminstration.Designer.cs">
+      <DependentUpon>Adminstration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Chashiers\ManageCashiers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Chashiers\ManageCashiers.Designer.cs">
+      <DependentUpon>ManageCashiers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Chashiers\NewCashier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Chashiers\NewCashier.Designer.cs">
+      <DependentUpon>NewCashier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Currencies\EditCurrency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Currencies\EditCurrency.Designer.cs">
+      <DependentUpon>EditCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Currencies\ManageCurrencies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Currencies\ManageCurrencies.Designer.cs">
+      <DependentUpon>ManageCurrencies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Currencies\NewCurrency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Currencies\NewCurrency.Designer.cs">
+      <DependentUpon>NewCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Expenses\ManageExpenses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Expenses\ManageExpenses.Designer.cs">
+      <DependentUpon>ManageExpenses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Expenses\NewExpense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administration\Expenses\NewExpense.Designer.cs">
+      <DependentUpon>NewExpense.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClientRefund.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ClientRefund.Designer.cs">
       <DependentUpon>ClientRefund.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.cs">
+      <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="ExpensesPayment.cs">
       <SubType>Form</SubType>
@@ -87,12 +138,6 @@
     </Compile>
     <Compile Include="ClientPayment.Designer.cs">
       <DependentUpon>ClientPayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Adminstration.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Adminstration.Designer.cs">
-      <DependentUpon>Adminstration.cs</DependentUpon>
     </Compile>
     <Compile Include="UsersGroups.cs">
       <SubType>Form</SubType>
@@ -119,9 +164,6 @@
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="ClientGroup.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Currency.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomerTransaction.cs">
@@ -153,30 +195,6 @@
     </Compile>
     <Compile Include="LedgerTransactionType.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NewCashier.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NewCashier.Designer.cs">
-      <DependentUpon>NewCashier.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ManageCashiers.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ManageCashiers.Designer.cs">
-      <DependentUpon>ManageCashiers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NewExpense.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NewExpense.Designer.cs">
-      <DependentUpon>NewExpense.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ManageExpenses.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ManageExpenses.Designer.cs">
-      <DependentUpon>ManageExpenses.cs</DependentUpon>
     </Compile>
     <Compile Include="NewBankAccount.cs">
       <SubType>Form</SubType>
@@ -372,6 +390,30 @@
     <Compile Include="VisaReservation.cs">
       <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Administration\Adminstration.resx">
+      <DependentUpon>Adminstration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Chashiers\ManageCashiers.resx">
+      <DependentUpon>ManageCashiers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Chashiers\NewCashier.resx">
+      <DependentUpon>NewCashier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Currencies\EditCurrency.resx">
+      <DependentUpon>EditCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Currencies\ManageCurrencies.resx">
+      <DependentUpon>ManageCurrencies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Currencies\NewCurrency.resx">
+      <DependentUpon>NewCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Expenses\ManageExpenses.resx">
+      <DependentUpon>ManageExpenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administration\Expenses\NewExpense.resx">
+      <DependentUpon>NewExpense.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClientRefund.resx">
       <DependentUpon>ClientRefund.cs</DependentUpon>
     </EmbeddedResource>
@@ -384,29 +426,12 @@
     <EmbeddedResource Include="ClientPayment.resx">
       <DependentUpon>ClientPayment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Adminstration.resx">
-      <DependentUpon>Adminstration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UsersGroups.resx">
       <DependentUpon>UsersGroups.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AddEditClientGroup.resx">
       <DependentUpon>AddEditClientGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NewCashier.resx">
-      <DependentUpon>NewCashier.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ManageCashiers.resx">
-      <DependentUpon>ManageCashiers.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NewExpense.resx">
-      <DependentUpon>NewExpense.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ManageExpenses.resx">
-      <DependentUpon>ManageExpenses.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NewBankAccount.resx">
       <DependentUpon>NewBankAccount.cs</DependentUpon>

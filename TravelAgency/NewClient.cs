@@ -89,8 +89,8 @@ namespace TravelAgency
             c.DateOfBirth = dtpDOB.Value;
            
          
-            TravelAgenceMasterClass.TravelAgencyContext.Clients.Add(c);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().Clients.Add(c);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             if (!Directory.Exists(TravelAgenceMasterClass.CurrentBranch.FilesPath))
             {
                 Directory.CreateDirectory(TravelAgenceMasterClass.CurrentBranch.FilesPath);
@@ -110,7 +110,7 @@ namespace TravelAgency
                     + "\\" + c.ClientID + "\\" + row.Cells[0].Value.ToString().Split(new char[] { '\\' }).Last());
             }
 
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 

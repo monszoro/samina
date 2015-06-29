@@ -179,7 +179,7 @@ namespace TravelAgency
         private void CheckForNewTickets()
         {
 
-            var query = from t in TravelAgenceMasterClass.TravelAgencyContext.Tickets
+            var query = from t in TravelAgenceMasterClass.getTravelAgencyContext().Tickets
                         where t.AssigneeUserID == TravelAgenceMasterClass.CurrentUser.UserID
                         select t;
             if (query.Count() > 0)

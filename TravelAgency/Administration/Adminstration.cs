@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using TravelAgency.Administration;
 
 namespace TravelAgency
 {
@@ -51,6 +52,12 @@ namespace TravelAgency
         {
             UsersGroups usersGroups = new UsersGroups();
             usersGroups.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ManageCurrencies t = new ManageCurrencies();
+            t.ShowDialog();
         }     
   
     }

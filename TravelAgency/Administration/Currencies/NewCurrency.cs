@@ -9,9 +9,9 @@ using System.Windows.Forms;
 using System.IO;
 namespace TravelAgency
 {
-    public partial class NewCashier : Form
+    public partial class NewCurrency : Form
     {
-       public NewCashier()
+        public NewCurrency()
         {
             InitializeComponent();
         }
@@ -25,13 +25,26 @@ namespace TravelAgency
                 ExitSave = true;
             }
             else
+            {
                 errorProvider1.SetError(txtName, "");
-                      if (ExitSave == true)
-                    return;
-                      Cashier c = new Cashier();
+            }
+
+            if (string.IsNullOrEmpty(tbxSign.Text))
+            {
+                errorProvider1.SetError(tbxSign, "Required Field");
+                ExitSave = true;
+            }
+            else
+            {
+                errorProvider1.SetError(tbxSign, "");
+            }
+            if (ExitSave == true)
+                return;
+            Currency c = new Currency();
             c.Name = txtName.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.Cashiers.Add(c);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            c.Sign = tbxSign.Text;
+            TravelAgenceMasterClass.getTravelAgencyContext().Currencies.Add(c);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 

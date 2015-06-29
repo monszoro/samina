@@ -31,8 +31,8 @@ namespace TravelAgency
            Expens ex = new Expens();
            ex.ExpenseID = 0;
            ex.ExpenseName = txtName.Text;
-           TravelAgenceMasterClass.TravelAgencyContext.Expenses.Add(ex);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+           TravelAgenceMasterClass.getTravelAgencyContext().Expenses.Add(ex);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 

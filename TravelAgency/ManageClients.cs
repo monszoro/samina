@@ -49,7 +49,7 @@ namespace TravelAgency
             dgvClients.Rows.Clear();
             
             DateTime d = dateTimePicker1.Value.Date;
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Clients
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Clients
                         where u.Title.Contains(txtTitle.Text) && u.FirstName.Contains(txtFirstName.Text)
                         && u.MiddleName.Contains(txtMiddleName.Text) && u.LastName.Contains(txtLastName.Text)
                         && u.CellPhone1.Contains(txtCellPhone1.Text) && u.CellPhone2.Contains(txtCellPhone1.Text)

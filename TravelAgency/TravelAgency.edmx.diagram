@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="TravelAgencyModel.Cashier" Width="1.5" PointX="11.25" PointY="31.125" />
         <EntityTypeShape EntityType="TravelAgencyModel.ClientGroup" Width="1.5" PointX="6" PointY="16.125" />
         <EntityTypeShape EntityType="TravelAgencyModel.Client" Width="1.5" PointX="8.25" PointY="12.5" />
-        <EntityTypeShape EntityType="TravelAgencyModel.Currency" Width="1.5" PointX="13.5" PointY="9.875" />
         <EntityTypeShape EntityType="TravelAgencyModel.CustomerTransaction" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="TravelAgencyModel.Expens" Width="1.5" PointX="11.25" PointY="33.5" />
         <EntityTypeShape EntityType="TravelAgencyModel.FinantialTransaction" Width="1.5" PointX="15.75" PointY="14.875" />
@@ -40,7 +39,6 @@
         <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Clients" />
         <AssociationConnector Association="TravelAgencyModel.FK_Reservations_Clients" />
         <AssociationConnector Association="TravelAgencyModel.FK_Tickets_Clients" />
-        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_Currency" />
         <AssociationConnector Association="TravelAgencyModel.FK_LedgerAccounts_Expenses" />
         <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" />
         <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" />
@@ -65,6 +63,8 @@
         <AssociationConnector Association="TravelAgencyModel.FK_Users_UserGroups" />
         <AssociationConnector Association="TravelAgencyModel.FK_Vendors_Users" />
         <AssociationConnector Association="TravelAgencyModel.ClientGroupClients" />
+        <EntityTypeShape EntityType="TravelAgencyModel.Currency" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="TravelAgencyModel.FK_FinantialTransactions_Currency" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

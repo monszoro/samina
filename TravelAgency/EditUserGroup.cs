@@ -33,10 +33,10 @@ namespace TravelAgency
                 errorProvider1.SetError(txtGroupName, "");
             }
             
-            userGroup = TravelAgenceMasterClass.TravelAgencyContext.UserGroups.Where(ug => ug.UserGroupID == userGroup.UserGroupID).SingleOrDefault();
+            userGroup = TravelAgenceMasterClass.getTravelAgencyContext().UserGroups.Where(ug => ug.UserGroupID == userGroup.UserGroupID).SingleOrDefault();
             userGroup.GroupName = txtGroupName.Text;
             userGroup.Description = txtGroupDescription.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();   
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();   
             userGroupUpdated = true;
             this.Close();
         }

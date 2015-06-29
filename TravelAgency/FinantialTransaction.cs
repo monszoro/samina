@@ -31,11 +31,11 @@ namespace TravelAgency
         public System.DateTime CreationDate { get; set; }
         public string Description { get; set; }
     
-        public virtual Currency Currency { get; set; }
         public virtual LedgerAccount LedgerAccount { get; set; }
         public virtual LedgerAccount LedgerAccount1 { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<LedgerTransaction> LedgerTransactions { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }

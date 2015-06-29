@@ -57,7 +57,7 @@ namespace TravelAgency
             }
             else errorProvider1.SetError(cboclients, "");
 
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Users
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Users
                         where u.Login.Equals(cboAssignee.Text)
                         select u;
 
@@ -69,21 +69,21 @@ namespace TravelAgency
             t.AssigneeUserID=user.UserID;
             t.ClientID = client.ClientID;
             t.IsClosed = false;
-            TravelAgenceMasterClass.TravelAgencyContext.Tickets.Add(t);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().Tickets.Add(t);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Note n = new Note();
             n.NoteBody = richTextBox2.Text ;
             n.DateCreated = DateTime.Now;
             n.TicketID = t.TicketID;
             n.CreationUserID = TravelAgenceMasterClass.CurrentUser.UserID;
-            TravelAgenceMasterClass.TravelAgencyContext.Notes.Add(n);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().Notes.Add(n);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
            Close();
         }
 
         private void loadUsers()
         {
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Users
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Users
                         select u;
             foreach (var user in query)
             {
@@ -95,7 +95,7 @@ namespace TravelAgency
         private void loadClients()
         {
             cboclients.ValueMember = "FullName";
-                var query = from c in TravelAgenceMasterClass.TravelAgencyContext.Clients
+                var query = from c in TravelAgenceMasterClass.getTravelAgencyContext().Clients
                         select c;
             foreach (var client in query)
             {

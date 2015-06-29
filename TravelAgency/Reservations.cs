@@ -19,7 +19,7 @@ namespace TravelAgency
 
         private void ResetControls(){
             cboReservationStatuses.Items.Add("All");
-            var query = from rs in TravelAgenceMasterClass.TravelAgencyContext.ReservationStatuses
+            var query = from rs in TravelAgenceMasterClass.getTravelAgencyContext().ReservationStatuses
                         select rs;
             cboReservationStatuses.ValueMember = "Description";
             foreach (var reservationStatus in query)
@@ -31,7 +31,7 @@ namespace TravelAgency
             dtpFrom.Value = DateTime.Now.AddMonths(-1);
             dtpTo.Value = DateTime.Now;
 
-            var queryClients = from c in TravelAgenceMasterClass.TravelAgencyContext.Clients
+            var queryClients = from c in TravelAgenceMasterClass.getTravelAgencyContext().Clients
                         select c;
 
             foreach (var cl in queryClients)
@@ -50,7 +50,7 @@ namespace TravelAgency
             if (txtClientName.Tag != null)
                 ClientID = ((Client)txtClientName.Tag).ClientID;
 
-            var query = from r in TravelAgenceMasterClass.TravelAgencyContext.Reservations 
+            var query = from r in TravelAgenceMasterClass.getTravelAgencyContext().Reservations 
                         where 
                      (r.ClientID== ClientID || (ClientID == -1 && r.Client.FullName.Contains(txtClientName.Text)))
                     && r.DateCreated>=dateFrom && r.DateCreated<=dateTo

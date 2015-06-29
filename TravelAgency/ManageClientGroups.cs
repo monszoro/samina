@@ -39,7 +39,7 @@ namespace TravelAgency
             ManageClients  frmClients = new ManageClients(true);
             List<Client> lstclients=frmClients.ReturnClientSelection();
             ClientGroup selectedGroup = (ClientGroup)dgvGroups.SelectedRows[0].Tag;
-            selectedGroup = TravelAgenceMasterClass.TravelAgencyContext.ClientGroups.Where(cg => cg.ClientGroupID == selectedGroup.ClientGroupID).SingleOrDefault();                     
+            selectedGroup = TravelAgenceMasterClass.getTravelAgencyContext().ClientGroups.Where(cg => cg.ClientGroupID == selectedGroup.ClientGroupID).SingleOrDefault();                     
             
             dgvClients.Rows.Clear();
             int i;
@@ -51,12 +51,12 @@ namespace TravelAgency
                 Client clientToAdd = lstclients.ElementAt(i);
                 if (!selectedGroup.Clients.Contains(clientToAdd))
                 {
-                    Client c = TravelAgenceMasterClass.TravelAgencyContext.Clients.Where(client => client.ClientID == clientToAdd.ClientID).SingleOrDefault();
+                    Client c = TravelAgenceMasterClass.getTravelAgencyContext().Clients.Where(client => client.ClientID == clientToAdd.ClientID).SingleOrDefault();
                     selectedGroup.Clients.Add(c);
                 }
               }
             }
-           TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+           TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             LoadClientsForSelectedGtoup();
         }
 
@@ -84,7 +84,7 @@ namespace TravelAgency
                 return;
             }
             ClientGroup cg = (ClientGroup)dgvGroups.SelectedRows[0].Tag;
-            cg = TravelAgenceMasterClass.TravelAgencyContext.ClientGroups.Where(c => c.ClientGroupID == cg.ClientGroupID).SingleOrDefault();
+            cg = TravelAgenceMasterClass.getTravelAgencyContext().ClientGroups.Where(c => c.ClientGroupID == cg.ClientGroupID).SingleOrDefault();
             dgvClients.Rows.Clear();
             foreach (Client Client1 in cg.Clients)
             {
@@ -124,12 +124,12 @@ namespace TravelAgency
                 return;
             }
             ClientGroup clientGroup = (ClientGroup)dgvGroups.SelectedRows[0].Tag;
-            clientGroup = TravelAgenceMasterClass.TravelAgencyContext.ClientGroups.Where(cg => cg.ClientGroupID == clientGroup.ClientGroupID).SingleOrDefault();
+            clientGroup = TravelAgenceMasterClass.getTravelAgencyContext().ClientGroups.Where(cg => cg.ClientGroupID == clientGroup.ClientGroupID).SingleOrDefault();
             Client client = (Client)dgvClients.SelectedRows[0].Tag;
-            client = TravelAgenceMasterClass.TravelAgencyContext.Clients.Where(c => c.ClientID == client.ClientID).SingleOrDefault();
+            client = TravelAgenceMasterClass.getTravelAgencyContext().Clients.Where(c => c.ClientID == client.ClientID).SingleOrDefault();
 
             clientGroup.Clients.Remove(client);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             
             LoadClientsForSelectedGtoup();
                        

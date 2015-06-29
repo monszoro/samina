@@ -20,7 +20,7 @@ namespace TravelAgency
         public void loadExpenses()
         {
             dgvBankAccounts.Rows.Clear();
-             var query = from expense in TravelAgenceMasterClass.TravelAgencyContext.Expenses
+             var query = from expense in TravelAgenceMasterClass.getTravelAgencyContext().Expenses
                         select expense;
             foreach (var exp in query)
             {

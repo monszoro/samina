@@ -17,7 +17,7 @@ namespace TravelAgency
             InitializeComponent();
             this.user = user;
             userUpdated  = false;
-            var query = from g in TravelAgenceMasterClass.TravelAgencyContext.UserGroups
+            var query = from g in TravelAgenceMasterClass.getTravelAgencyContext().UserGroups
                         select g;
 
             cboUserGroups.ValueMember = "GroupName";
@@ -45,12 +45,12 @@ namespace TravelAgency
             {
                 errorProvider1.SetError(txtGroupName, "");
             }
-            user = TravelAgenceMasterClass.TravelAgencyContext.Users.Where(u => u.UserID == user.UserID).SingleOrDefault();
+            user = TravelAgenceMasterClass.getTravelAgencyContext().Users.Where(u => u.UserID == user.UserID).SingleOrDefault();
             user.UserName = txtGroupName.Text;
             user.Login = txtLogin.Text;
             user.Password = txtPassword.Text;
             user.GroupID = ((UserGroup)cboUserGroups.SelectedItem).UserGroupID;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             userUpdated = true;
             this.Close();
         }

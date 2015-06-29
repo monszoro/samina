@@ -71,8 +71,8 @@
             <PropertyRef Name="CurrencyID" />
           </Key>
           <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="25" Nullable="false" />
-          <Property Name="Sign" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Sign" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerTransactions">
           <Key>
@@ -968,7 +968,6 @@
           <EntitySet Name="Cashiers" EntityType="TravelAgencyModel.Cashier" />
           <EntitySet Name="ClientGroups" EntityType="TravelAgencyModel.ClientGroup" />
           <EntitySet Name="Clients" EntityType="TravelAgencyModel.Client" />
-          <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
           <EntitySet Name="CustomerTransactions" EntityType="TravelAgencyModel.CustomerTransaction" />
           <EntitySet Name="Expenses" EntityType="TravelAgencyModel.Expens" />
           <EntitySet Name="FinantialTransactions" EntityType="TravelAgencyModel.FinantialTransaction" />
@@ -1018,10 +1017,6 @@
           <AssociationSet Name="FK_Tickets_Clients" Association="TravelAgencyModel.FK_Tickets_Clients">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="TravelAgencyModel.FK_FinantialTransactions_Currency">
-            <End Role="Currency" EntitySet="Currencies" />
-            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_LedgerAccounts_Expenses" Association="TravelAgencyModel.FK_LedgerAccounts_Expenses">
             <End Role="Expens" EntitySet="Expenses" />
@@ -1119,6 +1114,11 @@
             <End Role="ClientGroup" EntitySet="ClientGroups" />
             <End Role="Client" EntitySet="Clients" />
           </AssociationSet>
+          <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
+          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="TravelAgencyModel.FK_FinantialTransactions_Currency">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="BankAccount">
           <Key>
@@ -1183,15 +1183,6 @@
           <NavigationProperty Name="Tickets" Relationship="TravelAgencyModel.FK_Tickets_Clients" FromRole="Client" ToRole="Ticket" />
           <NavigationProperty Name="ClientGroups" Relationship="TravelAgencyModel.ClientGroupClients" FromRole="Client" ToRole="ClientGroup" />
         </EntityType>
-        <EntityType Name="Currency">
-          <Key>
-            <PropertyRef Name="CurrencyID" />
-          </Key>
-          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Sign" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="Currency" ToRole="FinantialTransaction" />
-        </EntityType>
         <EntityType Name="CustomerTransaction">
           <Key>
             <PropertyRef Name="CustomerTransactionID" />
@@ -1226,12 +1217,12 @@
           <Property Name="CreationUserID" Type="Int32" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="FinantialTransaction" ToRole="Currency" />
           <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
           <NavigationProperty Name="LedgerAccount1" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
           <NavigationProperty Name="PaymentType" Relationship="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" FromRole="FinantialTransaction" ToRole="PaymentType" />
           <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_FinantialTransactions_Users" FromRole="FinantialTransaction" ToRole="User" />
           <NavigationProperty Name="LedgerTransactions" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="FinantialTransaction" ToRole="LedgerTransaction" />
+          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="FinantialTransaction" ToRole="Currency" />
         </EntityType>
         <EntityType Name="FlightReservation">
           <Key>
@@ -1559,18 +1550,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FinantialTransactions_Currency">
-          <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
-          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="CurrencyID" />
-            </Principal>
-            <Dependent Role="FinantialTransaction">
-              <PropertyRef Name="CurrencyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LedgerAccounts_Expenses">
           <End Type="TravelAgencyModel.Expens" Role="Expens" Multiplicity="0..1" />
           <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
@@ -1855,6 +1834,27 @@
           <End Type="TravelAgencyModel.ClientGroup" Role="ClientGroup" Multiplicity="*" />
           <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
         </Association>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Sign" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="Currency" ToRole="FinantialTransaction" />
+        </EntityType>
+        <Association Name="FK_FinantialTransactions_Currency">
+          <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1925,15 +1925,6 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Currencies">
-            <EntityTypeMapping TypeName="TravelAgencyModel.Currency">
-              <MappingFragment StoreEntitySet="Currency">
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2197,6 +2188,15 @@
               <ScalarProperty Name="ClientGroupID" ColumnName="ClientGroupID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="TravelAgencyModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

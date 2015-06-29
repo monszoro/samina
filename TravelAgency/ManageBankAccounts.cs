@@ -20,7 +20,7 @@ namespace TravelAgency
         public void loadBankAccounts()
         {
             dgvBankAccounts.Rows.Clear();
-             var query = from bankAccount in TravelAgenceMasterClass.TravelAgencyContext.BankAccounts
+             var query = from bankAccount in TravelAgenceMasterClass.getTravelAgencyContext().BankAccounts
                         select bankAccount;
             foreach (var bAcc in query)
             {
