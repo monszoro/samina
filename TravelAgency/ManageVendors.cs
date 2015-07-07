@@ -30,7 +30,7 @@ namespace TravelAgency
         private void cmdSearch_Click(object sender, EventArgs e)
         {
             dgvExpense.Rows.Clear();
-            var query = from V in TravelAgenceMasterClass.TravelAgencyContext.Vendors 
+            var query = from V in TravelAgenceMasterClass.getTravelAgencyContext().Vendors 
                         where V.Name.Contains(txtName.Text) 
                         && ( V.Phone==null || V.Phone.Contains(txtPhone.Text))
                         && (V.Email==null||V.Email.Contains(txtEmail.Text))

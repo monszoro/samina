@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using TravelAgency.Administration;
+using Database;
 namespace TravelAgency
 {
     public partial class EditCurrency : Form

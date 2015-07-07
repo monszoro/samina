@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BankAccounts">
           <Key>
             <PropertyRef Name="BankAccountID" />
@@ -704,6 +704,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CreateIndexIfMissingOrDifferent_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="List" Type="varchar(max)" Mode="In" />
+          <Parameter Name="SplitOn" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="Value" Type="varchar" MaxLength="100" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="os_CheckIndexColumnExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="index_id" Type="int" Mode="In" />
@@ -919,8 +931,12 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TravelAgencyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="TravelAgencyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TravelAgencyEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="CreateIndexIfMissingOrDifferent_Split" IsComposable="true" ReturnType="Collection(TravelAgencyModel.CreateIndexIfMissingOrDifferent_Split_Result)">
+            <Parameter Name="List" Mode="In" Type="String" />
+            <Parameter Name="SplitOn" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="os_CreateIndexIfMissingOrDifferent">
             <Parameter Name="TableName" Mode="In" Type="String" />
             <Parameter Name="CommaSeparatedColumns" Mode="In" Type="String" />
@@ -949,11 +965,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(TravelAgencyModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(TravelAgencyModel.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -968,6 +984,7 @@
           <EntitySet Name="Cashiers" EntityType="TravelAgencyModel.Cashier" />
           <EntitySet Name="ClientGroups" EntityType="TravelAgencyModel.ClientGroup" />
           <EntitySet Name="Clients" EntityType="TravelAgencyModel.Client" />
+          <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
           <EntitySet Name="CustomerTransactions" EntityType="TravelAgencyModel.CustomerTransaction" />
           <EntitySet Name="Expenses" EntityType="TravelAgencyModel.Expens" />
           <EntitySet Name="FinantialTransactions" EntityType="TravelAgencyModel.FinantialTransaction" />
@@ -1017,6 +1034,10 @@
           <AssociationSet Name="FK_Tickets_Clients" Association="TravelAgencyModel.FK_Tickets_Clients">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="TravelAgencyModel.FK_FinantialTransactions_Currency">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_LedgerAccounts_Expenses" Association="TravelAgencyModel.FK_LedgerAccounts_Expenses">
             <End Role="Expens" EntitySet="Expenses" />
@@ -1114,12 +1135,22 @@
             <End Role="ClientGroup" EntitySet="ClientGroups" />
             <End Role="Client" EntitySet="Clients" />
           </AssociationSet>
-          <EntitySet Name="Currencies" EntityType="TravelAgencyModel.Currency" />
-          <AssociationSet Name="FK_FinantialTransactions_Currency" Association="TravelAgencyModel.FK_FinantialTransactions_Currency">
-            <End Role="Currency" EntitySet="Currencies" />
-            <End Role="FinantialTransaction" EntitySet="FinantialTransactions" />
-          </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
+        <ComplexType Name="CreateIndexIfMissingOrDifferent_Split_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         <EntityType Name="BankAccount">
           <Key>
             <PropertyRef Name="BankAccountID" />
@@ -1183,6 +1214,15 @@
           <NavigationProperty Name="Tickets" Relationship="TravelAgencyModel.FK_Tickets_Clients" FromRole="Client" ToRole="Ticket" />
           <NavigationProperty Name="ClientGroups" Relationship="TravelAgencyModel.ClientGroupClients" FromRole="Client" ToRole="ClientGroup" />
         </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Sign" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="Currency" ToRole="FinantialTransaction" />
+        </EntityType>
         <EntityType Name="CustomerTransaction">
           <Key>
             <PropertyRef Name="CustomerTransactionID" />
@@ -1217,12 +1257,12 @@
           <Property Name="CreationUserID" Type="Int32" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="FinantialTransaction" ToRole="Currency" />
           <NavigationProperty Name="LedgerAccount" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
           <NavigationProperty Name="LedgerAccount1" Relationship="TravelAgencyModel.FK_FinantialTransactions_LedgerAccounts1" FromRole="FinantialTransaction" ToRole="LedgerAccount" />
           <NavigationProperty Name="PaymentType" Relationship="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" FromRole="FinantialTransaction" ToRole="PaymentType" />
           <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_FinantialTransactions_Users" FromRole="FinantialTransaction" ToRole="User" />
           <NavigationProperty Name="LedgerTransactions" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="FinantialTransaction" ToRole="LedgerTransaction" />
-          <NavigationProperty Name="Currency" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="FinantialTransaction" ToRole="Currency" />
         </EntityType>
         <EntityType Name="FlightReservation">
           <Key>
@@ -1550,6 +1590,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FinantialTransactions_Currency">
+          <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="FinantialTransaction">
+              <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LedgerAccounts_Expenses">
           <End Type="TravelAgencyModel.Expens" Role="Expens" Multiplicity="0..1" />
           <End Type="TravelAgencyModel.LedgerAccount" Role="LedgerAccount" Multiplicity="*" />
@@ -1834,40 +1886,44 @@
           <End Type="TravelAgencyModel.ClientGroup" Role="ClientGroup" Multiplicity="*" />
           <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
         </Association>
-        <EntityType Name="Currency">
-          <Key>
-            <PropertyRef Name="CurrencyID" />
-          </Key>
-          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Sign" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FinantialTransactions" Relationship="TravelAgencyModel.FK_FinantialTransactions_Currency" FromRole="Currency" ToRole="FinantialTransaction" />
-        </EntityType>
-        <Association Name="FK_FinantialTransactions_Currency">
-          <End Type="TravelAgencyModel.Currency" Role="Currency" Multiplicity="1" />
-          <End Type="TravelAgencyModel.FinantialTransaction" Role="FinantialTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="CurrencyID" />
-            </Principal>
-            <Dependent Role="FinantialTransaction">
-              <PropertyRef Name="CurrencyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TravelAgencyModelStoreContainer" CdmEntityContainer="TravelAgencyEntities">
+          <FunctionImportMapping FunctionImportName="CreateIndexIfMissingOrDifferent_Split" FunctionName="TravelAgencyModel.Store.CreateIndexIfMissingOrDifferent_Split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.CreateIndexIfMissingOrDifferent_Split_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="os_CreateIndexIfMissingOrDifferent" FunctionName="TravelAgencyModel.Store.os_CreateIndexIfMissingOrDifferent" />
           <FunctionImportMapping FunctionImportName="os_DropIndexesAndConstraintsDependingOnAcolumn" FunctionName="TravelAgencyModel.Store.os_DropIndexesAndConstraintsDependingOnAcolumn" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TravelAgencyModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TravelAgencyModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TravelAgencyModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="TravelAgencyModel.Store.sp_helpdiagramdefinition" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="TravelAgencyModel.Store.sp_helpdiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="TravelAgencyModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="TravelAgencyModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TravelAgencyModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TravelAgencyModel.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="BankAccounts">
@@ -1925,6 +1981,15 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="TravelAgencyModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2188,21 +2253,12 @@
               <ScalarProperty Name="ClientGroupID" ColumnName="ClientGroupID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Currencies">
-            <EntityTypeMapping TypeName="TravelAgencyModel.Currency">
-              <MappingFragment StoreEntitySet="Currency">
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -2213,7 +2269,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

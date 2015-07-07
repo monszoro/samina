@@ -138,9 +138,6 @@
     <Compile Include="ClientRefund.Designer.cs">
       <DependentUpon>ClientRefund.cs</DependentUpon>
     </Compile>
-    <Compile Include="Currency.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
     <Compile Include="ExpensesPayment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,51 +167,6 @@
     </Compile>
     <Compile Include="AddEditClientGroup.Designer.cs">
       <DependentUpon>AddEditClientGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BankAccount.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Branch.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Cashier.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Client.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClientGroup.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerTransaction.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Expens.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FinantialTransaction.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FlightReservation.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeneralLedgerAccount.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HotelReservation.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LedgerAccount.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LedgerTransaction.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LedgerTransactionDetail.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LedgerTransactionType.cs">
-      <DependentUpon>TravelAgency.tt</DependentUpon>
     </Compile>
     <Compile Include="NewBankAccount.cs">
       <SubType>Form</SubType>

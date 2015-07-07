@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,7 +50,7 @@ namespace TravelAgency.Administration
         {
             if (dgvCurrencies.SelectedRows.Count > 0)
             {
-                TravelAgency.Currency selectedClient = (TravelAgency.Currency)dgvCurrencies.SelectedRows[0].Tag;
+                Currency selectedClient = (Currency)dgvCurrencies.SelectedRows[0].Tag;
                 EditCurrency frmEdit = new EditCurrency(this, selectedClient);
                 frmEdit.ShowDialog();
                     loadCurrencies();

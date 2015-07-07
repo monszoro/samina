@@ -27,34 +27,34 @@ namespace Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<BankAccount> BankAccounts { get; set; }
-        public DbSet<Branch> Branches { get; set; }
-        public DbSet<Cashier> Cashiers { get; set; }
-        public DbSet<ClientGroup> ClientGroups { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<CustomerTransaction> CustomerTransactions { get; set; }
-        public DbSet<Expens> Expenses { get; set; }
-        public DbSet<FinantialTransaction> FinantialTransactions { get; set; }
-        public DbSet<FlightReservation> FlightReservations { get; set; }
-        public DbSet<GeneralLedgerAccount> GeneralLedgerAccounts { get; set; }
-        public DbSet<HotelReservation> HotelReservations { get; set; }
-        public DbSet<LedgerAccount> LedgerAccounts { get; set; }
-        public DbSet<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
-        public DbSet<LedgerTransaction> LedgerTransactions { get; set; }
-        public DbSet<LedgerTransactionType> LedgerTransactionTypes { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<PaymentType> PaymentTypes { get; set; }
-        public DbSet<ReservationClient> ReservationClients { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<ReservationStatus> ReservationStatuses { get; set; }
-        public DbSet<ReservationType> ReservationTypes { get; set; }
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
-        public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<VisaReservation> VisaReservations { get; set; }
-        public DbSet<Currency> Currencies { get; set; }
+        public virtual DbSet<BankAccount> BankAccounts { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Cashier> Cashiers { get; set; }
+        public virtual DbSet<ClientGroup> ClientGroups { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Currency> Currencies { get; set; }
+        public virtual DbSet<CustomerTransaction> CustomerTransactions { get; set; }
+        public virtual DbSet<Expens> Expenses { get; set; }
+        public virtual DbSet<FinantialTransaction> FinantialTransactions { get; set; }
+        public virtual DbSet<FlightReservation> FlightReservations { get; set; }
+        public virtual DbSet<GeneralLedgerAccount> GeneralLedgerAccounts { get; set; }
+        public virtual DbSet<HotelReservation> HotelReservations { get; set; }
+        public virtual DbSet<LedgerAccount> LedgerAccounts { get; set; }
+        public virtual DbSet<LedgerTransactionDetail> LedgerTransactionDetails { get; set; }
+        public virtual DbSet<LedgerTransaction> LedgerTransactions { get; set; }
+        public virtual DbSet<LedgerTransactionType> LedgerTransactionTypes { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<ReservationClient> ReservationClients { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<ReservationStatus> ReservationStatuses { get; set; }
+        public virtual DbSet<ReservationType> ReservationTypes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<VisaReservation> VisaReservations { get; set; }
     
         [DbFunction("TravelAgencyEntities", "CreateIndexIfMissingOrDifferent_Split")]
         public virtual IQueryable<CreateIndexIfMissingOrDifferent_Split_Result> CreateIndexIfMissingOrDifferent_Split(string list, string splitOn)
