@@ -25,7 +25,7 @@ namespace TravelAgency
         private void LoadComboBoxes()
         {
            
-            var query = from c in TravelAgenceMasterClass.TravelAgencyContext.Cashiers 
+            var query = from c in TravelAgenceMasterClass.getTravelAgencyContext().Cashiers 
                         select c;
             cboCashiers.ValueMember = "Name";
             foreach (var cashier in query)
@@ -34,7 +34,7 @@ namespace TravelAgency
             }
 
 
-            var query2 = from v in TravelAgenceMasterClass.TravelAgencyContext.Expenses
+            var query2 = from v in TravelAgenceMasterClass.getTravelAgencyContext().Expenses
                         select v;
             cboExpenses.ValueMember = "ExpenseName";
             foreach (var vendor in query2)
@@ -43,7 +43,7 @@ namespace TravelAgency
             }
 
 
-            var query3 = from c in TravelAgenceMasterClass.TravelAgencyContext.BankAccounts
+            var query3 = from c in TravelAgenceMasterClass.getTravelAgencyContext().BankAccounts
                         select c;
             cboBankAccounts.ValueMember = "AccountNumber";
             foreach (var bankAccount in query3)
@@ -52,7 +52,7 @@ namespace TravelAgency
             }
 
 
-            var query4 = from c in TravelAgenceMasterClass.TravelAgencyContext.PaymentTypes
+            var query4 = from c in TravelAgenceMasterClass.getTravelAgencyContext().PaymentTypes
                          select c;
             cboPaymentTypes.ValueMember = "Name";
             foreach (var paymentType in query4)
@@ -60,7 +60,7 @@ namespace TravelAgency
                 cboPaymentTypes.Items.Add(paymentType);
             }
 
-            var query5 = from c in TravelAgenceMasterClass.TravelAgencyContext.Currencies
+            var query5 = from c in TravelAgenceMasterClass.getTravelAgencyContext().Currencies
                          select c;
             cboCurrencies.ValueMember = "Name";
             foreach (var bankAccount in query5)

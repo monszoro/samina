@@ -22,7 +22,7 @@ namespace TravelAgency
             dtpTo.Value = DateTime.Now;
             cboStatus.SelectedIndex = 0;
 
-            var query = from c in TravelAgenceMasterClass.TravelAgencyContext.Clients
+            var query = from c in TravelAgenceMasterClass.getTravelAgencyContext().Clients
                         select c;
 
             foreach (var cl in query)
@@ -45,7 +45,7 @@ namespace TravelAgency
             int ClientID = -1;
             if (txtClientName.Tag != null)
                 ClientID = ((Client)txtClientName.Tag).ClientID;
-            var query = from t in TravelAgenceMasterClass.TravelAgencyContext.Tickets
+            var query = from t in TravelAgenceMasterClass.getTravelAgencyContext().Tickets
                         where t.DateCreated>=dateFrom && t.DateCreated<=dateTo
                         && (t.IsClosed == (closed == 2) || 0 == closed)
                         && (t.ClientID== ClientID || (ClientID == -1 && ((t.Client.FullName).Contains(txtClientName.Text))))

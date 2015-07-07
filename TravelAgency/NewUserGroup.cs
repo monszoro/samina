@@ -48,8 +48,8 @@ namespace TravelAgency
             UserGroup ug =new  UserGroup();
             ug.GroupName=txtGroupName.Text;
             ug.Description = txtGroupDescription.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.UserGroups.Add(ug);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().UserGroups.Add(ug);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             NewGroupAdded = true;
             this.Close();
         }

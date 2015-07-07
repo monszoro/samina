@@ -22,7 +22,7 @@ namespace TravelAgency
 
             dgvUserGroups.Rows.Clear();
          
-            var query = from uG in TravelAgenceMasterClass.TravelAgencyContext.UserGroups
+            var query = from uG in TravelAgenceMasterClass.getTravelAgencyContext().UserGroups
                         select uG;
             foreach (var UGroup in query)
             {
@@ -144,9 +144,9 @@ namespace TravelAgency
             if (MessageBox.Show("Are you sure you want to delete the selected user?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 int id = ((User)dgvUsers.SelectedRows[0].Tag).UserID;
-                User user = TravelAgenceMasterClass.TravelAgencyContext.Users.Where(u => u.UserID == id).SingleOrDefault();
+                User user = TravelAgenceMasterClass.getTravelAgencyContext().Users.Where(u => u.UserID == id).SingleOrDefault();
                 user.isActive = false;
-                TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
                 LoadUsersForSelectedGtoup();
             }
         }

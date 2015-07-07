@@ -19,7 +19,7 @@ namespace TravelAgency
             this.ticket  = t;
             lblClient.Text = t.Client.FirstName;
 
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Users
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Users
                         select u;
 
             foreach (var user in query)
@@ -28,7 +28,7 @@ namespace TravelAgency
                 if (ticket.AssigneeUserID == user.UserID)
                     cboAssignee.SelectedItem = user.Login ;
             }
-            var query2 = from n in TravelAgenceMasterClass.TravelAgencyContext.Notes
+            var query2 = from n in TravelAgenceMasterClass.getTravelAgencyContext().Notes
                     where n.TicketID == t.TicketID
                     orderby n.DateCreated
                     select n;
@@ -56,12 +56,12 @@ namespace TravelAgency
         }
         private void saveTicket(Boolean closeTicket )
         {
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Users
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Users
                         where u.Login.Equals(cboAssignee.Text)
                         select u;
 
             var user = query.First();
-            ticket = TravelAgenceMasterClass.TravelAgencyContext.Tickets.Where(t => t.TicketID == ticket.TicketID).SingleOrDefault();
+            ticket = TravelAgenceMasterClass.getTravelAgencyContext().Tickets.Where(t => t.TicketID == ticket.TicketID).SingleOrDefault();
             ticket.AssigneeUserID = user.UserID;
             if (richTextBox1.Text != null && richTextBox1.Text != "")
             {
@@ -70,11 +70,11 @@ namespace TravelAgency
                 n.DateCreated=DateTime.Now;
                 n.TicketID=ticket.TicketID;
                 n.CreationUserID = TravelAgenceMasterClass.CurrentUser.UserID;
-                TravelAgenceMasterClass.TravelAgencyContext.Notes.Add(n);
+                TravelAgenceMasterClass.getTravelAgencyContext().Notes.Add(n);
             }
             if (closeTicket)
                 ticket.IsClosed = true;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             
         }
 

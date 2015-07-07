@@ -41,10 +41,10 @@ namespace TravelAgency
             }
             if (this.clientGroup != null)
             {
-                clientGroup = TravelAgenceMasterClass.TravelAgencyContext.ClientGroups.Where(ug => ug.ClientGroupID == clientGroup.ClientGroupID).SingleOrDefault();
+                clientGroup = TravelAgenceMasterClass.getTravelAgencyContext().ClientGroups.Where(ug => ug.ClientGroupID == clientGroup.ClientGroupID).SingleOrDefault();
                 clientGroup.Name = txtGroupName.Text;
                 clientGroup.Description = txtGroupDescription.Text;
-                TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
                 clientGroupUpdated = true;
                 this.Close();
             }
@@ -53,8 +53,8 @@ namespace TravelAgency
                 clientGroup = new ClientGroup();
                 clientGroup.Name = txtGroupName.Text;
                 clientGroup.Description = txtGroupDescription.Text;
-                TravelAgenceMasterClass.TravelAgencyContext.ClientGroups.Add(clientGroup);
-                TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                TravelAgenceMasterClass.getTravelAgencyContext().ClientGroups.Add(clientGroup);
+                TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
                 NewGroupAdded = true;
                 this.Close();
             }

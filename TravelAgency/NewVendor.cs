@@ -70,8 +70,8 @@ namespace TravelAgency
             v.Address = txtAddress.Text;
             v.Email = txtEmail.Text;
             v.Phone = txtPhone.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.Vendors.Add (v);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().Vendors.Add (v);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 

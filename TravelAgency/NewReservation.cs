@@ -178,7 +178,7 @@ namespace TravelAgency
         private void LoadComboBoxes()
         {
             cboclients.ValueMember = "FullName";
-            var queryClients = from c in TravelAgenceMasterClass.TravelAgencyContext.Clients
+            var queryClients = from c in TravelAgenceMasterClass.getTravelAgencyContext().Clients
                         select c;
             foreach (var client in queryClients)
             {
@@ -190,7 +190,7 @@ namespace TravelAgency
             }
 
 
-            var q = from rt in TravelAgenceMasterClass.TravelAgencyContext.ReservationTypes
+            var q = from rt in TravelAgenceMasterClass.getTravelAgencyContext().ReservationTypes
                     select rt;
             cboType.ValueMember = "Description";
             foreach (var resType in q)
@@ -201,7 +201,7 @@ namespace TravelAgency
                     cboType.SelectedItem = resType;
                 }
             }
-            var query = from v in TravelAgenceMasterClass.TravelAgencyContext.Vendors
+            var query = from v in TravelAgenceMasterClass.getTravelAgencyContext().Vendors
                         select v;
             cboVendors.ValueMember = "Name";
             foreach (var vendor in query)
@@ -407,8 +407,8 @@ namespace TravelAgency
                     vendor.Name = cboVendors.Text;
                     vendor.DateCreated = DateTime.Now;
                     vendor.CreationUserID = TravelAgenceMasterClass.CurrentUser.UserID;
-                    TravelAgenceMasterClass.TravelAgencyContext.Vendors.Add(vendor);
-                    TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                    TravelAgenceMasterClass.getTravelAgencyContext().Vendors.Add(vendor);
+                    TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
                 }
             
 
@@ -436,7 +436,7 @@ namespace TravelAgency
         CurReservation.NetPrice = decimal.Parse(txtNetPrice.Text);
         CurReservation.Note = txtNotes.Text;
       
-        TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+        TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
 
 
         switch (((ReservationType)cboType.SelectedItem).TypeId)
@@ -470,14 +470,14 @@ namespace TravelAgency
             }
 
 
-            CurReservation = TravelAgenceMasterClass.TravelAgencyContext.Reservations.Where(Rc => Rc.ReservationID == CurReservation.ReservationID).SingleOrDefault();
+            CurReservation = TravelAgenceMasterClass.getTravelAgencyContext().Reservations.Where(Rc => Rc.ReservationID == CurReservation.ReservationID).SingleOrDefault();
         while(CurReservation.ReservationClients.Count>0)
         {
           ReservationClient RClient = CurReservation.ReservationClients.ElementAt(0);
-        RClient = TravelAgenceMasterClass.TravelAgencyContext.ReservationClients.Where(Rc => Rc.ReservationClientID == RClient.ReservationClientID).SingleOrDefault();
+        RClient = TravelAgenceMasterClass.getTravelAgencyContext().ReservationClients.Where(Rc => Rc.ReservationClientID == RClient.ReservationClientID).SingleOrDefault();
         CurReservation.ReservationClients.Remove(RClient);
 
-        TravelAgenceMasterClass.TravelAgencyContext.ReservationClients.Remove(RClient);
+        TravelAgenceMasterClass.getTravelAgencyContext().ReservationClients.Remove(RClient);
         } 
             //TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
             foreach (DataGridViewRow d in ClientNamesGridView.Rows)
@@ -487,10 +487,10 @@ namespace TravelAgency
                   ReservationClient rc = new ReservationClient();
                   rc.ReservationID= CurReservation.ReservationID;
                   rc.ClientName = d.Cells[0].Value.ToString();
-                  TravelAgenceMasterClass.TravelAgencyContext.ReservationClients.Add(rc);
+                  TravelAgenceMasterClass.getTravelAgencyContext().ReservationClients.Add(rc);
               }
             }
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
       }
         
 private void  saveNewReservation(Vendor vendor) {
@@ -545,8 +545,8 @@ private void  saveNewReservation(Vendor vendor) {
     r.Commission = decimal.Parse(txtCommition.Text);
     r.PaidAmount = 0;
             r.Note = txtNotes.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.Reservations.Add (r);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().Reservations.Add (r);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
 
             switch (typeId)
             {
@@ -559,7 +559,7 @@ private void  saveNewReservation(Vendor vendor) {
                     hr.DoubleRooms = int.Parse(DoubleRoomsUpDown.Value.ToString());
                     hr.TripleRooms = int.Parse(TripleRoomsUpDown.Value.ToString());
                     hr.QuadRooms = int.Parse(QuadRoomsUpDown.Value.ToString());
-                    TravelAgenceMasterClass.TravelAgencyContext.HotelReservations.Add(hr);
+                    TravelAgenceMasterClass.getTravelAgencyContext().HotelReservations.Add(hr);
                     break;
                 case ReservationTypes.Flight:
                     FlightReservation fr =new  FlightReservation();
@@ -570,14 +570,14 @@ private void  saveNewReservation(Vendor vendor) {
                     fr.RefAirLine = txtRefAirLine.Text;
                     fr.TicketNo = txtTicketNo .Text;
                     fr.RefSystem = txtRefSystem.Text;
-                    TravelAgenceMasterClass.TravelAgencyContext.FlightReservations.Add(fr);
+                    TravelAgenceMasterClass.getTravelAgencyContext().FlightReservations.Add(fr);
                     break;
                 case ReservationTypes.Visa:
                     VisaReservation vr = new VisaReservation();
                     vr.ReservationID=r.ReservationID;
                     vr.Country= txtVisaCountry.Text;
                     vr.VisaType = txtVisaType.Text;
-                    TravelAgenceMasterClass.TravelAgencyContext.VisaReservations.Add(vr);
+                    TravelAgenceMasterClass.getTravelAgencyContext().VisaReservations.Add(vr);
                     break;
                 default:
                     break;
@@ -590,10 +590,10 @@ private void  saveNewReservation(Vendor vendor) {
                             ReservationClient rc = new ReservationClient();
                             rc.ReservationID=r.ReservationID;
                             rc.ClientName=d.Cells[0].Value.ToString();
-                            TravelAgenceMasterClass.TravelAgencyContext.ReservationClients.Add(rc);
+                            TravelAgenceMasterClass.getTravelAgencyContext().ReservationClients.Add(rc);
                         }
                     }
-                    TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                    TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
 }
         private void cboType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -665,7 +665,7 @@ private void  saveNewReservation(Vendor vendor) {
             if (CurReservation.StatusID == 1)
             {
                 CurReservation.StatusID = 2;
-                TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+                TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
                 Close();
             }
             else
@@ -679,7 +679,7 @@ private void  saveNewReservation(Vendor vendor) {
         private void cmdCancelReservation_Click(object sender, EventArgs e)
         {
             CurReservation.StatusID = 3;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 
@@ -708,13 +708,13 @@ private void  saveNewReservation(Vendor vendor) {
             dtpFromDate.Enabled = true;
             ClientNamesGridView.Enabled = true;
             CurReservation.StatusID = 1;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
         }
 
         private void cmdReOpen_Click(object sender, EventArgs e)
         {
             CurReservation .StatusID = (int)ReservationStatuses.Pending;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             cmdReOpen.Visible = false;
             LoadReservationInfo();
         }
@@ -722,7 +722,7 @@ private void  saveNewReservation(Vendor vendor) {
         private void cmdReFund_Click(object sender, EventArgs e)
         {
             CurReservation.StatusID = (int)ReservationStatuses.Refunded;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             cmdReFund.Visible = false;
             CmdChange.Visible = false;
             LoadReservationInfo();
@@ -731,9 +731,9 @@ private void  saveNewReservation(Vendor vendor) {
         private void cmdConfirm_Click_1(object sender, EventArgs e)
         {
             CurReservation.StatusID = (int)ReservationStatuses.Confirmed;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             //TravelAgenceMasterClass.resetTravelAgencyEntities();
-            var query = from r in TravelAgenceMasterClass.TravelAgencyContext.Reservations
+            var query = from r in TravelAgenceMasterClass.getTravelAgencyContext().Reservations
                         where
                      (r.ReservationID == CurReservation.ReservationID)
                         select r;

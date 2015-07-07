@@ -20,7 +20,7 @@ namespace TravelAgency
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var query = from u in TravelAgenceMasterClass.TravelAgencyContext.Users
+            var query = from u in TravelAgenceMasterClass.getTravelAgencyContext().Users
                         where u.Login.Equals(txtUserName.Text)
                         && u.Password.Equals(txtPassword.Text)
                         && u.isActive.Equals(true)
@@ -29,7 +29,7 @@ namespace TravelAgency
             if (query.Count() > 0)
             {
                 TravelAgenceMasterClass.CurrentUser = query.First();
-                var queryBranches = from B in TravelAgenceMasterClass.TravelAgencyContext.Branches
+                var queryBranches = from B in TravelAgenceMasterClass.getTravelAgencyContext().Branches
                                     select B;
                 TravelAgenceMasterClass.CurrentBranch = queryBranches.First();
                 this.Hide();

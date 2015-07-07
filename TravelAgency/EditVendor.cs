@@ -51,13 +51,13 @@ namespace TravelAgency
             
             if (ExitSave == true)
                 return;
-            ven = TravelAgenceMasterClass.TravelAgencyContext.Vendors.Where(v => v.VendorID == ven.VendorID).SingleOrDefault();
+            ven = TravelAgenceMasterClass.getTravelAgencyContext().Vendors.Where(v => v.VendorID == ven.VendorID).SingleOrDefault();
 
             ven.Address = txtAddress.Text;
             ven.Phone=txtPhone.Text;
             ven.Email = txtEmail.Text;
             ven.Name = txtName.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();    
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();    
             Close();
         }
 

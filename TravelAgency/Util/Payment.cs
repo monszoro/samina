@@ -20,7 +20,7 @@ namespace TravelAgency.Util
             ledgerTransaction.Description = "Reservation no."+reservation.ReservationID+" is confirmed";
             ledgerTransaction.ReservationID = reservation.ReservationID;
             // Save changes 
-            TravelAgenceMasterClass.TravelAgencyContext.LedgerTransactions.Add(ledgerTransaction);
+            TravelAgenceMasterClass.getTravelAgencyContext().LedgerTransactions.Add(ledgerTransaction);
             //TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
 
             // credit client
@@ -29,7 +29,7 @@ namespace TravelAgency.Util
             clientTransactionDetail.Amount=reservation.NetPrice;
             clientTransactionDetail.LedgerAccount=reservation.Client.LedgerAccounts.ElementAt(0);
             clientTransactionDetail.LedgerTransactionTypeID = (int)TransactionType.Credit;
-            TravelAgenceMasterClass.TravelAgencyContext.LedgerTransactionDetails.Add(clientTransactionDetail);
+            TravelAgenceMasterClass.getTravelAgencyContext().LedgerTransactionDetails.Add(clientTransactionDetail);
 
             // debit vendor 
             LedgerTransactionDetail vendorTransactionDetail = new LedgerTransactionDetail();
@@ -37,7 +37,7 @@ namespace TravelAgency.Util
             vendorTransactionDetail.Amount = reservation.BasicPrice + reservation.Taxes;
             vendorTransactionDetail.LedgerAccount = reservation.Vendor.LedgerAccounts.ElementAt(0);
             vendorTransactionDetail.LedgerTransactionTypeID = (int)TransactionType.Debit;
-            TravelAgenceMasterClass.TravelAgencyContext.LedgerTransactionDetails.Add(vendorTransactionDetail);
+            TravelAgenceMasterClass.getTravelAgencyContext().LedgerTransactionDetails.Add(vendorTransactionDetail);
            
             // debit eslam 
             LedgerTransactionDetail thisCompanyTransactionDetail = new LedgerTransactionDetail();
@@ -45,10 +45,10 @@ namespace TravelAgency.Util
             thisCompanyTransactionDetail.Amount = reservation.Commission;
             thisCompanyTransactionDetail.LedgerAccountID = TravelAgenceMasterClass.MainAccountID;
             thisCompanyTransactionDetail.LedgerTransactionTypeID = (int)TransactionType.Debit;
-            TravelAgenceMasterClass.TravelAgencyContext.LedgerTransactionDetails.Add(thisCompanyTransactionDetail);
+            TravelAgenceMasterClass.getTravelAgencyContext().LedgerTransactionDetails.Add(thisCompanyTransactionDetail);
 
             // Save changes 
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
         }
 
         public static void clientAddCacheToCashier(Client client, Cashier cashier, PaymentData paymentData)
@@ -117,7 +117,7 @@ namespace TravelAgency.Util
             LedgerTransaction ledgerTransaction = new LedgerTransaction();
             ledgerTransaction.Description = description;
             ledgerTransaction.FinantialTransaction = finantialTransaction;
-            TravelAgenceMasterClass.TravelAgencyContext.LedgerTransactions.Add(ledgerTransaction);
+            TravelAgenceMasterClass.getTravelAgencyContext().LedgerTransactions.Add(ledgerTransaction);
 
             // debit client
             LedgerTransactionDetail clientTransactionDetail = new LedgerTransactionDetail();
@@ -135,7 +135,7 @@ namespace TravelAgency.Util
             leadgerTransactionDetail.LedgerTransactionTypeID = (int)TransactionType.Credit;
             ledgerTransaction.LedgerTransactionDetails.Add(leadgerTransactionDetail);
             // Save changes 
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
         }
     }
 }

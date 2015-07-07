@@ -41,8 +41,8 @@ namespace TravelAgency
             BankAccount b =new BankAccount();
             b.BankName = txtName.Text;
             b.AccountNumber = txtNumber.Text;
-            TravelAgenceMasterClass.TravelAgencyContext.BankAccounts.Add(b);
-            TravelAgenceMasterClass.TravelAgencyContext.SaveChanges();
+            TravelAgenceMasterClass.getTravelAgencyContext().BankAccounts.Add(b);
+            TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
             Close();
         }
 
