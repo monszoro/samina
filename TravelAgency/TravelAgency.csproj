@@ -144,6 +144,18 @@
     <Compile Include="ExpensesPayment.Designer.cs">
       <DependentUpon>ExpensesPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\LedgerTransactionsReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\LedgerTransactionsReport.Designer.cs">
+      <DependentUpon>LedgerTransactionsReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Reports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\Reports.Designer.cs">
+      <DependentUpon>Reports.cs</DependentUpon>
+    </Compile>
     <Compile Include="VendorPayment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -341,7 +353,12 @@
     <EmbeddedResource Include="ExpensesPayment.resx">
       <DependentUpon>ExpensesPayment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Reporting\LedgerTransactionsReport.resx">
+      <DependentUpon>LedgerTransactionsReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Reports.resx">
+      <DependentUpon>Reports.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VendorPayment.resx">
       <DependentUpon>VendorPayment.cs</DependentUpon>
     </EmbeddedResource>

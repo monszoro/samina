@@ -197,5 +197,22 @@ namespace TravelAgency
             butTickets_Click(null,null);
 
         }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.GetType() == typeof(Reports ))
+                {
+                    f.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+                    return;
+                }
+            }
+            Reports m = new Reports();
+            m.MdiParent = this;
+            m.WindowState = FormWindowState.Maximized;
+            m.Show();
+
+        }
     }
 }

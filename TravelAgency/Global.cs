@@ -7,6 +7,6 @@ namespace TravelAgency
 {
     class Global
     {
-        public const string sami = "s";
+        
     }
 }

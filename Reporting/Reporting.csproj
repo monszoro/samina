@@ -69,6 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LedgerTransactionsReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LedgerTransactionsReport.rpt</DependentUpon>
+    </Compile>
     <Compile Include="ReportingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +88,10 @@
       <DependentUpon>ReservationReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="LedgerTransactionsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LedgerTransactionsReport.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportingForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ReportingForm.cs</DependentUpon>
