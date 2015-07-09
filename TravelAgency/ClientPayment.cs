@@ -18,87 +18,20 @@ namespace TravelAgency
         {
             InitializeComponent();
             LoadComboBoxes();
-            cboPaymentTypes.SelectedIndex = 0;
-            cboCurrencies.SelectedIndex = 0;
+            uc_accountCurrenciesAmount.loadControl(false);
         }
 
         private void LoadComboBoxes()
         {
-           
-            var query = from c in TravelAgenceMasterClass.getTravelAgencyContext().Cashiers 
-                        select c;
-            cboCashiers.ValueMember = "Name";
-            foreach (var cashier in query)
-            {
-                cboCashiers.Items.Add(cashier);
-            }
-
-
             var query2 = from c in TravelAgenceMasterClass.getTravelAgencyContext().Clients
-                        select c;
+                         select c;
             cboClients.ValueMember = "FullName";
             foreach (var client in query2)
             {
                 cboClients.Items.Add(client);
             }
-
-
-            var query3 = from c in TravelAgenceMasterClass.getTravelAgencyContext().BankAccounts
-                        select c;
-            cboBankAccounts.ValueMember = "AccountNumber";
-            foreach (var bankAccount in query3)
-            {
-                cboBankAccounts.Items.Add(bankAccount);
-            }
-
-
-            var query4 = from c in TravelAgenceMasterClass.getTravelAgencyContext().PaymentTypes
-                         select c;
-            cboPaymentTypes.ValueMember = "Name";
-            foreach (var paymentType in query4)
-            {
-                cboPaymentTypes.Items.Add(paymentType);
-            }
-
-            var query5 = from c in TravelAgenceMasterClass.getTravelAgencyContext().Currencies
-                         select c;
-            cboCurrencies.ValueMember = "Name";
-            foreach (var bankAccount in query5)
-            {
-                cboCurrencies.Items.Add(bankAccount);
-            }
-
-
-
         }
 
-        private void cboPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PaymentType paymentType = (PaymentType)cboPaymentTypes.SelectedItem;
-            if (paymentType.IsBankOperation)
-            {
-                pnlBankAccount.Show();
-                pnlCashier.Hide();
-            }
-            else
-            {
-                pnlBankAccount.Hide();
-                pnlCashier.Show();
-            }
-        }
-
-        private void cboCurrencies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Currency currency = (Currency)cboCurrencies.SelectedItem;
-            if (currency.CurrencyID == LE)
-            {
-                nudExchangeRate.Value = 1;
-            }
-            else
-            {
-                nudExchangeRate.Value = 0;
-            }
-        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
@@ -120,78 +53,25 @@ namespace TravelAgency
                 errProvider.SetError(cboClients, "");
             }
 
-            // payment type
-            PaymentType paymentType = (PaymentType)cboPaymentTypes.SelectedItem;
-            if (paymentType.IsBankOperation)
-            {
-                // bank account
-                if (cboBankAccounts.SelectedItem == null)
-                {
-                    errProvider.SetError(cboBankAccounts, "Required Field");
-                    ExitSave = true;
-                }
-                else
-                {
-                    errProvider.SetError(cboBankAccounts, "");
-                }
-            }
-            else
-            {
-                // Cashier
-                if (cboCashiers.SelectedItem == null)
-                {
-                    errProvider.SetError(cboCashiers, "Required Field");
-                    ExitSave = true;
-                }
-                else
-                {
-                    errProvider.SetError(cboCashiers, "");
-                }
-                
-            }
+            PaymentData paymentData = uc_accountCurrenciesAmount.validateAndGetPaymentData();
 
-            if (nudAmount.Value == 0)
-            {
-                errProvider.SetError(nudAmount, "Can't be zero");
-                ExitSave = true;
-            }
-            else 
-            {
-                errProvider.SetError(nudAmount, "");
-            }
-
-            if (nudExchangeRate.Value == 0)
-            {
-                errProvider.SetError(nudExchangeRate, "Can't be zero");
-                ExitSave = true;
-            }
-            else
-            {
-                errProvider.SetError(nudExchangeRate, "");
-            }
-
-            if (!ExitSave)
+            if (!ExitSave && paymentData != null)
             {
 
                 Client client = (Client)cboClients.SelectedItem;
-                PaymentData paymentData = new PaymentData();
-                paymentData.Amount = nudAmount.Value;
-                paymentData.PaymentType = paymentType;
-                paymentData.Currency = (Currency)cboCurrencies.SelectedItem;
-                paymentData.ExchangeRate = nudExchangeRate.Value;
 
-                if (paymentType.IsBankOperation)
+                if (paymentData.PaymentType.IsBankOperation)
                 {
-                    Payment.clientAddCacheToBankAccount(client,(BankAccount)cboBankAccounts.SelectedItem,paymentData);
+                    Payment.clientAddCacheToBankAccount(client, paymentData.BankAccount, paymentData);
                 }
                 else
                 {
-                    Payment.clientAddCacheToCashier(client, (Cashier)cboCashiers.SelectedItem, paymentData);
+                    Payment.clientAddCacheToCashier(client, paymentData.Cashier, paymentData);
                 }
                 Close();
             }
         }
-        
-        
+
+
     }
 }

@@ -15,5 +15,9 @@ namespace TravelAgency.Util
         public Currency Currency { get; set; }
 
         public decimal ExchangeRate { get; set; }
+
+        public BankAccount BankAccount { get; set; }
+
+        public Cashier Cashier  { get; set; }
     }
 }

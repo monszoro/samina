@@ -144,6 +144,7 @@
     <Compile Include="ExpensesPayment.Designer.cs">
       <DependentUpon>ExpensesPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Financials\ExchangeCurrency.cs">
     <Compile Include="Reporting\LedgerTransactionsReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,7 +160,25 @@
     <Compile Include="VendorPayment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VendorPayment.Designer.cs">
+    <Compile Include="Financials\ExchangeCurrency.Designer.cs">
+      <DependentUpon>ExchangeCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Financials\GetReveneus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Financials\GetReveneus.Designer.cs">
+      <DependentUpon>GetReveneus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\AccountCurrenciesAmount.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\AccountCurrenciesAmount.Designer.cs">
+      <DependentUpon>AccountCurrenciesAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Financials\VendorPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Financials\VendorPayment.Designer.cs">
       <DependentUpon>VendorPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="ClientPayment.cs">
@@ -192,10 +211,10 @@
     <Compile Include="ManageBankAccounts.Designer.cs">
       <DependentUpon>ManageBankAccounts.cs</DependentUpon>
     </Compile>
-    <Compile Include="Financial.cs">
+    <Compile Include="Financials\Financial.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Financial.Designer.cs">
+    <Compile Include="Financials\Financial.Designer.cs">
       <DependentUpon>Financial.cs</DependentUpon>
     </Compile>
     <Compile Include="ManageClientGroups.cs">
@@ -353,13 +372,22 @@
     <EmbeddedResource Include="ExpensesPayment.resx">
       <DependentUpon>ExpensesPayment.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Financials\ExchangeCurrency.resx">
+      <DependentUpon>ExchangeCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Financials\GetReveneus.resx">
+      <DependentUpon>GetReveneus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\AccountCurrenciesAmount.resx">
+      <DependentUpon>AccountCurrenciesAmount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\LedgerTransactionsReport.resx">
       <DependentUpon>LedgerTransactionsReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports.resx">
       <DependentUpon>Reports.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VendorPayment.resx">
+    <EmbeddedResource Include="Financials\VendorPayment.resx">
       <DependentUpon>VendorPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClientPayment.resx">
@@ -379,7 +407,7 @@
       <DependentUpon>ManageBankAccounts.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Financial.resx">
+    <EmbeddedResource Include="Financials\Financial.resx">
       <DependentUpon>Financial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManageClientGroups.resx">
