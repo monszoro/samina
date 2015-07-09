@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TravelAgency
+namespace TravelAgency.Financials
 {
     public partial class Financial : Form
     {
@@ -51,6 +51,12 @@ namespace TravelAgency
         {
             ClientRefund clientRefund = new ClientRefund();
             clientRefund.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            GetReveneus getReveneus = new GetReveneus();
+            getReveneus.ShowDialog();
         }     
   
     }
