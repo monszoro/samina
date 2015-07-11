@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Database;
 using System.Data.Entity.Core.Objects;
+using TravelAgency.Util;
 namespace TravelAgency
 {
     public partial class LedgerTransactionsReport : Form
@@ -76,16 +77,21 @@ namespace TravelAgency
                 foreach (var LAccount in query)
                 {
 
-                    if (LAccount.Client != null)
-                        cboSubLedgerAccoutn.Items.Add(LAccount.Client.FullName);
+                    int AccountID = LAccount.LedgerAccountID;
+                    String Name="";
+
+                    if (LAccount.Client != null)                       
+                        Name = LAccount.Client.FullName;
                     else if (LAccount.Vendor != null)
-                        cboSubLedgerAccoutn.Items.Add(LAccount.Vendor.Name);
+                        Name = LAccount.Vendor.Name;
                     else if (LAccount.Cashier != null)
-                        cboSubLedgerAccoutn.Items.Add(LAccount.Cashier.Name);
-                    else if (LAccount.BankAccount!=null)
-                        cboSubLedgerAccoutn.Items.Add(LAccount.BankAccount.BankName + " " + LAccount.BankAccount.AccountNumber );
-                    else if (LAccount.Expens!=null)
-                        cboSubLedgerAccoutn.Items.Add(LAccount.Expens.ExpenseName);
+                        Name =LAccount.Cashier.Name;
+                    else if (LAccount.BankAccount != null)
+                     Name=   LAccount.BankAccount.BankName + " " + LAccount.BankAccount.AccountNumber;
+                    else if (LAccount.Expens != null)
+                        Name = LAccount.Expens.ExpenseName;
+
+                    cboSubLedgerAccoutn.Items.Add(new ComboItem(Name, AccountID));
                 }
 
 

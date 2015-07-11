@@ -135,7 +135,7 @@
             // 
             this.cmdSave.Enabled = false;
             this.cmdSave.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold);
-            this.cmdSave.Image = global::TravelAgency.Properties.Resources.save321;
+            this.cmdSave.Image = global::TravelAgency.Properties.Resources.ok32;
             this.cmdSave.Location = new System.Drawing.Point(223, 157);
             this.cmdSave.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cmdSave.Name = "cmdSave";
