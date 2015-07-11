@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TravelAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BankAccounts">
           <Key>
             <PropertyRef Name="BankAccountID" />
@@ -102,6 +102,7 @@
           <Property Name="PaymentTypeID" Type="int" Nullable="false" />
           <Property Name="CurrencyID" Type="int" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="24" Scale="12" Nullable="false" />
+          <Property Name="ConsumedAmount" Type="decimal" Precision="24" Scale="12" Nullable="false" />
           <Property Name="ExchangeRate" Type="decimal" Precision="24" Scale="12" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="38" Scale="13" StoreGeneratedPattern="Computed" />
           <Property Name="CreationUserID" Type="int" Nullable="false" />
@@ -171,6 +172,7 @@
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="FinantialTransactionID" Type="bigint" />
           <Property Name="ReservationID" Type="int" />
+          <Property Name="TransactionTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="LedgerTransactionTypes">
           <Key>
@@ -717,23 +719,22 @@
           </ReturnType>
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="getAccountCurrencyAmount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LeadgerAccountId" Type="int" Mode="In" />
+          <Parameter Name="PaymentTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getLedgerTransactions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GeneralLedgerAccountID" Type="int" Mode="In" />
+          <Parameter Name="LedgerAccountID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getReservationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReservationID" Type="int" Mode="In" />
+        </Function>
         <Function Name="os_CheckIndexColumnExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="index_id" Type="int" Mode="In" />
           <Parameter Name="index_column_id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
           <Parameter Name="is_included_column" Type="int" Mode="In" />
-        </Function>
-        <Function Name="os_CreateIndexIfMissingOrDifferent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="TableName" Type="varchar" Mode="In" />
-          <Parameter Name="CommaSeparatedColumns" Type="varchar(max)" Mode="In" />
-          <Parameter Name="CommaSeparatedIncludes" Type="varchar(max)" Mode="In" />
-          <Parameter Name="OptionalIndexName" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="os_DropIndexesAndConstraintsDependingOnAcolumn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="TableName" Type="varchar" Mode="In" />
-          <Parameter Name="ColumnName" Type="varchar" Mode="In" />
-          <Parameter Name="DropIndexes" Type="bit" Mode="In" />
-          <Parameter Name="DropConstraints" Type="bit" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1135,6 +1136,17 @@
             <End Role="ClientGroup" EntitySet="ClientGroups" />
             <End Role="Client" EntitySet="Clients" />
           </AssociationSet>
+          <FunctionImport Name="getAccountCurrencyAmount" ReturnType="Collection(TravelAgencyModel.getAccountCurrencyAmount_Result)">
+            <Parameter Name="LeadgerAccountId" Mode="In" Type="Int32" />
+            <Parameter Name="PaymentTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getLedgerTransactions" ReturnType="Collection(TravelAgencyModel.getLedgerTransactions_Result)">
+            <Parameter Name="GeneralLedgerAccountID" Mode="In" Type="Int32" />
+            <Parameter Name="LedgerAccountID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getReservationInfo" ReturnType="Collection(TravelAgencyModel.getReservationInfo_Result)">
+            <Parameter Name="ReservationID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CreateIndexIfMissingOrDifferent_Split_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1263,6 +1275,7 @@
           <NavigationProperty Name="PaymentType" Relationship="TravelAgencyModel.FK_FinantialTransactions_PaymentTypes" FromRole="FinantialTransaction" ToRole="PaymentType" />
           <NavigationProperty Name="User" Relationship="TravelAgencyModel.FK_FinantialTransactions_Users" FromRole="FinantialTransaction" ToRole="User" />
           <NavigationProperty Name="LedgerTransactions" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="FinantialTransaction" ToRole="LedgerTransaction" />
+          <Property Name="ConsumedAmount" Type="Decimal" Nullable="false" Precision="24" Scale="12" />
         </EntityType>
         <EntityType Name="FlightReservation">
           <Key>
@@ -1345,6 +1358,7 @@
           <NavigationProperty Name="FinantialTransaction" Relationship="TravelAgencyModel.FK_LedgerTransactions_LedgerTransactions" FromRole="LedgerTransaction" ToRole="FinantialTransaction" />
           <NavigationProperty Name="LedgerTransactionDetails" Relationship="TravelAgencyModel.FK_LedgerTransactionDetails_LedgerTrqnsactions" FromRole="LedgerTransaction" ToRole="LedgerTransactionDetail" />
           <NavigationProperty Name="Reservation" Relationship="TravelAgencyModel.FK_LedgerTransactions_Reservations" FromRole="LedgerTransaction" ToRole="Reservation" />
+          <Property Name="TransactionTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="LedgerTransactionType">
           <Key>
@@ -1886,6 +1900,48 @@
           <End Type="TravelAgencyModel.ClientGroup" Role="ClientGroup" Multiplicity="*" />
           <End Type="TravelAgencyModel.Client" Role="Client" Multiplicity="*" />
         </Association>
+        <ComplexType Name="getAccountCurrencyAmount_Result">
+          <Property Type="Decimal" Name="ExchangeRate" Nullable="false" Precision="24" Scale="12" />
+          <Property Type="Int32" Name="CurrencyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="38" Scale="12" />
+        </ComplexType>
+        <ComplexType Name="getLedgerTransactions_Result">
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="24" Scale="12" />
+          <Property Type="DateTime" Name="TransactionTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TranType" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getReservationInfo_Result">
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateTo" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="BasicPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Taxes" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CommitionRatio" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="NetPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Commission" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="19" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="152" />
+          <Property Type="String" Name="ReservationType" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="ReservationStatus" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="DoubleRooms" Nullable="true" />
+          <Property Type="String" Name="HotelName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="QuadRooms" Nullable="true" />
+          <Property Type="Int32" Name="SingleRooms" Nullable="true" />
+          <Property Type="Int32" Name="TripleRooms" Nullable="true" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VisaType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="AirLine" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FromLocation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RefAirLine" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RefSystem" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TicketNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ToLocation" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1900,8 +1956,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="os_CreateIndexIfMissingOrDifferent" FunctionName="TravelAgencyModel.Store.os_CreateIndexIfMissingOrDifferent" />
-          <FunctionImportMapping FunctionImportName="os_DropIndexesAndConstraintsDependingOnAcolumn" FunctionName="TravelAgencyModel.Store.os_DropIndexesAndConstraintsDependingOnAcolumn" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TravelAgencyModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TravelAgencyModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TravelAgencyModel.Store.sp_dropdiagram" />
@@ -2016,6 +2070,7 @@
           <EntitySetMapping Name="FinantialTransactions">
             <EntityTypeMapping TypeName="TravelAgencyModel.FinantialTransaction">
               <MappingFragment StoreEntitySet="FinantialTransactions">
+                <ScalarProperty Name="ConsumedAmount" ColumnName="ConsumedAmount" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="CreationUserID" ColumnName="CreationUserID" />
@@ -2093,6 +2148,7 @@
           <EntitySetMapping Name="LedgerTransactions">
             <EntityTypeMapping TypeName="TravelAgencyModel.LedgerTransaction">
               <MappingFragment StoreEntitySet="LedgerTransactions">
+                <ScalarProperty Name="TransactionTime" ColumnName="TransactionTime" />
                 <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
                 <ScalarProperty Name="FinantialTransactionID" ColumnName="FinantialTransactionID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -2253,6 +2309,60 @@
               <ScalarProperty Name="ClientGroupID" ColumnName="ClientGroupID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="getAccountCurrencyAmount" FunctionName="TravelAgencyModel.Store.getAccountCurrencyAmount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.getAccountCurrencyAmount_Result">
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getLedgerTransactions" FunctionName="TravelAgencyModel.Store.getLedgerTransactions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.getLedgerTransactions_Result">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionTime" ColumnName="TransactionTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TranType" ColumnName="TranType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getReservationInfo" FunctionName="TravelAgencyModel.Store.getReservationInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TravelAgencyModel.getReservationInfo_Result">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="BasicPrice" ColumnName="BasicPrice" />
+                <ScalarProperty Name="Taxes" ColumnName="Taxes" />
+                <ScalarProperty Name="CommitionRatio" ColumnName="CommitionRatio" />
+                <ScalarProperty Name="NetPrice" ColumnName="NetPrice" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ReservationType" ColumnName="ReservationType" />
+                <ScalarProperty Name="ReservationStatus" ColumnName="ReservationStatus" />
+                <ScalarProperty Name="DoubleRooms" ColumnName="DoubleRooms" />
+                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="QuadRooms" ColumnName="QuadRooms" />
+                <ScalarProperty Name="SingleRooms" ColumnName="SingleRooms" />
+                <ScalarProperty Name="TripleRooms" ColumnName="TripleRooms" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="VisaType" ColumnName="VisaType" />
+                <ScalarProperty Name="AirLine" ColumnName="AirLine" />
+                <ScalarProperty Name="FromLocation" ColumnName="FromLocation" />
+                <ScalarProperty Name="RefAirLine" ColumnName="RefAirLine" />
+                <ScalarProperty Name="RefSystem" ColumnName="RefSystem" />
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
+                <ScalarProperty Name="ToLocation" ColumnName="ToLocation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

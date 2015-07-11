@@ -145,6 +145,8 @@
       <DependentUpon>ExpensesPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="Financials\ExchangeCurrency.cs">
+	      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reporting\LedgerTransactionsReport.cs">
       <SubType>Form</SubType>
     </Compile>

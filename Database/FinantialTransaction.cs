@@ -30,6 +30,7 @@ namespace Database
         public int CreationUserID { get; set; }
         public System.DateTime CreationDate { get; set; }
         public string Description { get; set; }
+        public decimal ConsumedAmount { get; set; }
     
         public virtual Currency Currency { get; set; }
         public virtual LedgerAccount LedgerAccount { get; set; }

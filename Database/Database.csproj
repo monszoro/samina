@@ -84,6 +84,15 @@
     <Compile Include="GeneralLedgerAccount.cs">
       <DependentUpon>TravelAgencyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="getAccountCurrencyAmount_Result.cs">
+      <DependentUpon>TravelAgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getLedgerTransactions_Result.cs">
+      <DependentUpon>TravelAgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getReservationInfo_Result.cs">
+      <DependentUpon>TravelAgencyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="HotelReservation.cs">
       <DependentUpon>TravelAgencyModel.tt</DependentUpon>
     </Compile>

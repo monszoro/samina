@@ -214,5 +214,40 @@ namespace Database
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<getAccountCurrencyAmount_Result> getAccountCurrencyAmount(Nullable<int> leadgerAccountId, Nullable<int> paymentTypeID)
+        {
+            var leadgerAccountIdParameter = leadgerAccountId.HasValue ?
+                new ObjectParameter("LeadgerAccountId", leadgerAccountId) :
+                new ObjectParameter("LeadgerAccountId", typeof(int));
+    
+            var paymentTypeIDParameter = paymentTypeID.HasValue ?
+                new ObjectParameter("PaymentTypeID", paymentTypeID) :
+                new ObjectParameter("PaymentTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAccountCurrencyAmount_Result>("getAccountCurrencyAmount", leadgerAccountIdParameter, paymentTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<getLedgerTransactions_Result> getLedgerTransactions(Nullable<int> generalLedgerAccountID, Nullable<int> ledgerAccountID)
+        {
+            var generalLedgerAccountIDParameter = generalLedgerAccountID.HasValue ?
+                new ObjectParameter("GeneralLedgerAccountID", generalLedgerAccountID) :
+                new ObjectParameter("GeneralLedgerAccountID", typeof(int));
+    
+            var ledgerAccountIDParameter = ledgerAccountID.HasValue ?
+                new ObjectParameter("LedgerAccountID", ledgerAccountID) :
+                new ObjectParameter("LedgerAccountID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getLedgerTransactions_Result>("getLedgerTransactions", generalLedgerAccountIDParameter, ledgerAccountIDParameter);
+        }
+    
+        public virtual ObjectResult<getReservationInfo_Result> getReservationInfo(Nullable<int> reservationID)
+        {
+            var reservationIDParameter = reservationID.HasValue ?
+                new ObjectParameter("ReservationID", reservationID) :
+                new ObjectParameter("ReservationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getReservationInfo_Result>("getReservationInfo", reservationIDParameter);
+        }
     }
 }
