@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbCompany = new System.Windows.Forms.GroupBox();
-            this.cboSubLedgerAccoutn = new System.Windows.Forms.ComboBox();
+            this.cboSubLedgerAccount = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cboGeneralLedgerAccount = new System.Windows.Forms.ComboBox();
@@ -45,7 +45,7 @@
             // 
             // gbCompany
             // 
-            this.gbCompany.Controls.Add(this.cboSubLedgerAccoutn);
+            this.gbCompany.Controls.Add(this.cboSubLedgerAccount);
             this.gbCompany.Controls.Add(this.label1);
             this.gbCompany.Controls.Add(this.label2);
             this.gbCompany.Controls.Add(this.cboGeneralLedgerAccount);
@@ -58,14 +58,14 @@
             this.gbCompany.TabStop = false;
             this.gbCompany.Text = "Filters";
             // 
-            // cboSubLedgerAccoutn
+            // cboSubLedgerAccount
             // 
-            this.cboSubLedgerAccoutn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSubLedgerAccoutn.FormattingEnabled = true;
-            this.cboSubLedgerAccoutn.Location = new System.Drawing.Point(183, 61);
-            this.cboSubLedgerAccoutn.Name = "cboSubLedgerAccoutn";
-            this.cboSubLedgerAccoutn.Size = new System.Drawing.Size(298, 24);
-            this.cboSubLedgerAccoutn.TabIndex = 37;
+            this.cboSubLedgerAccount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSubLedgerAccount.FormattingEnabled = true;
+            this.cboSubLedgerAccount.Location = new System.Drawing.Point(183, 61);
+            this.cboSubLedgerAccount.Name = "cboSubLedgerAccount";
+            this.cboSubLedgerAccount.Size = new System.Drawing.Size(298, 24);
+            this.cboSubLedgerAccount.TabIndex = 37;
             // 
             // label1
             // 
@@ -177,7 +177,7 @@
         private System.Windows.Forms.ComboBox cboGeneralLedgerAccount;
         internal System.Windows.Forms.Button cmdCancel;
         internal System.Windows.Forms.Button cmdSave;
-        private System.Windows.Forms.ComboBox cboSubLedgerAccoutn;
+        private System.Windows.Forms.ComboBox cboSubLedgerAccount;
         private System.Windows.Forms.Label label1;
         internal System.Windows.Forms.Label label2;
 

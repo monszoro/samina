@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Database;
 using System.Data.Entity.Core.Objects;
 using TravelAgency.Util;
+using Reporting;
 namespace TravelAgency
 {
     public partial class LedgerTransactionsReport : Form
@@ -30,25 +31,17 @@ namespace TravelAgency
 
         private void cmdSave_Click(object sender, EventArgs e)
         {
-            //if (String.IsNullOrEmpty(txtUserName.Text))
-            //{
-            //    errorProvider1.SetError(txtUserName, "Required Field");
-            //    return;
-            //}
-            //else
-            //{
-            //    errorProvider1.SetError(txtUserName, "");
-            //}
-            //User u = new User();
-            //u.UserName =txtUserName.Text;
-            //u.Login= txtLogin.Text;
-            //u.Password=txtPassword.Text;
-            //u.UserGroup = ((UserGroup)cboUserGroups.SelectedItem);
-            //u.isActive = true;
-            //TravelAgenceMasterClass.getTravelAgencyContext().Users.Add(u);
-            //TravelAgenceMasterClass.getTravelAgencyContext().SaveChanges();
-            //NewUserAdded = true;
-            //this.Close();
+          if( cboGeneralLedgerAccount.SelectedIndex>=0)
+          {
+              int GeneralAccountID=((GeneralLedgerAccount)cboGeneralLedgerAccount.SelectedItem).GeneralLedgerAccountID;
+              int SubLedgerAccountID=-1;
+              if(cboSubLedgerAccount.SelectedIndex>0)
+                  SubLedgerAccountID = ((ComboItem)cboSubLedgerAccount.SelectedItem).Value;
+
+              ReportingForm rf = new ReportingForm();
+              rf.ViewLedgerTransactionsreport(GeneralAccountID, SubLedgerAccountID);
+            
+          }
         }
 
         private void cmdCancel_Click(object sender, EventArgs e)
@@ -60,7 +53,7 @@ namespace TravelAgency
         {
             if(cboGeneralLedgerAccount.SelectedIndex>=0)
             {
-                cboSubLedgerAccoutn.Items.Clear();
+                cboSubLedgerAccount.Items.Clear();
                 cmdSave.Enabled = true;
                 int generalLedgerAccountID = ((GeneralLedgerAccount)cboGeneralLedgerAccount.SelectedItem).GeneralLedgerAccountID;
                 var query = from LA in TravelAgenceMasterClass.getTravelAgencyContext().LedgerAccounts
@@ -70,7 +63,7 @@ namespace TravelAgency
 
                 if (query.Count() == 0)
                 {
-                    cboSubLedgerAccoutn.Enabled = false;
+                    cboSubLedgerAccount.Enabled = false;
                     return;
                 }
 
@@ -91,7 +84,7 @@ namespace TravelAgency
                     else if (LAccount.Expens != null)
                         Name = LAccount.Expens.ExpenseName;
 
-                    cboSubLedgerAccoutn.Items.Add(new ComboItem(Name, AccountID));
+                    cboSubLedgerAccount.Items.Add(new ComboItem(Name, AccountID));
                 }
 
 

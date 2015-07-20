@@ -24,5 +24,18 @@ namespace Reporting
             this.crystalReportViewer1.ReportSource = rep;
             this.ShowDialog();
         }
+        public void ViewLedgerTransactionsreport(int GeneralLedgerAccountID,int SubLedgerAccountID)
+        {
+
+            LedgerTransactionsReport rep = new LedgerTransactionsReport();
+            rep.SetParameterValue(0,GeneralLedgerAccountID);
+            if(SubLedgerAccountID!=-1)
+            rep.SetParameterValue(1, SubLedgerAccountID);
+            else
+               rep.SetParameterValue(1, DBNull.Value);
+            this.crystalReportViewer1.ReportSource = rep;
+            this.ShowDialog();
+
+        }
     }
 }

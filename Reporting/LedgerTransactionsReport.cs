@@ -90,9 +90,17 @@ namespace Reporting {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_LedgerAccountID {
+        public CrystalDecisions.Shared.IParameterField Parameter_GeneralLedgerAccountID {
             get {
                 return this.DataDefinition.ParameterFields[0];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_LedgerAccountID {
+            get {
+                return this.DataDefinition.ParameterFields[1];
             }
         }
     }
